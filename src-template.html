@@ -110,6 +110,31 @@
   .abtn.bookmark{margin-left:auto}
   .abtn.bookmark.on{background:var(--gold);color:#3a2a00;border-color:var(--gold)}
 
+  /* FOOD finder */
+  .cravings{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:.5rem;margin:.6rem 0 1rem}
+  .crave{display:flex;flex-direction:column;align-items:center;gap:.2rem;padding:.7rem .3rem;
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;text-decoration:none;color:var(--ink);
+    font-size:.78rem;font-weight:700}
+  .crave span{font-size:1.5rem}
+  .crave:active{transform:scale(.96)}
+  .fooditem{display:flex;align-items:center;gap:.6rem;background:var(--panel);border:1px solid var(--line);
+    border-radius:12px;padding:.6rem .8rem;margin-bottom:.45rem;text-decoration:none;color:var(--ink)}
+  .fooditem b{display:block;font-size:.92rem}
+  .fooditem small{color:var(--muted)}
+  .fooditem .go{margin-left:auto;color:var(--gold);font-weight:800}
+
+  /* PACK list */
+  .pk{display:flex;align-items:center;gap:.7rem;width:100%;text-align:left;background:var(--panel);
+    border:1px solid var(--line);border-radius:12px;padding:.65rem .8rem;margin-bottom:.4rem;
+    color:var(--ink);font-family:inherit;font-size:.92rem;font-weight:600;cursor:pointer;min-height:48px}
+  .pk .box{width:22px;height:22px;border-radius:7px;border:2px solid var(--muted);flex-shrink:0;
+    display:inline-flex;align-items:center;justify-content:center;font-size:.85rem;color:#3a2a00}
+  .pk.on{opacity:.55}
+  .pk.on b{text-decoration:line-through}
+  .pk.on .box{background:var(--gold);border-color:var(--gold)}
+  .pk small{display:block;color:var(--muted);font-weight:400}
+  .packbar{font-size:.8rem;font-weight:800;color:var(--gold);letter-spacing:.08em;margin:.3rem 0 .8rem}
+
   /* INFO */
   .infoblock h3{font-size:1rem;letter-spacing:.04em;color:var(--gold);margin:1.3rem 0 .5rem}
   .infoblock table{width:100%;border-collapse:collapse;font-size:.84rem;background:var(--panel);
@@ -184,6 +209,7 @@
 const M = q => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q);
 const BADGES = {book:["b-book","Book ahead"],walkup:["b-walkup","Walk-up"],free:["b-free","Free"],pick:["b-pick","Pick one"],ifopen:["b-ifopen","If open"]};
 let booked = new Set(JSON.parse(localStorage.getItem("cali26") || "[]"));
+let packed = new Set(JSON.parse(localStorage.getItem("cali26pack") || "[]"));
 
 const DAYS = [
  {id:"todo",util:"TO BOOK",title:"Lock these in",
@@ -257,29 +283,32 @@ const DAYS = [
    {e:"🚲",title:"E-Blazer over 50 lb? Pedal-assist e-bikes",badge:"walkup",when:"PLAN B",d:"Same loop, same shop, ferry-legal for sure.",loc:["Blazing Saddles","2715 Hyde St San Francisco"],price:"$64–80 / bike"},
    {e:"⛴️",title:"Keep throttles, turn around at Sausalito",badge:"walkup",when:"PLAN C",d:"Blue & Gold ferry to Pier 41 publishes no e-bike weight limit — confirm 415-705-8200. Lands 5 min from the shop.",loc:["Sausalito Ferry Landing","Sausalito Ferry Landing"],price:"~$14",link:["blueandgoldfleet.com","https://www.blueandgoldfleet.com"]}
   ]},
- {id:24,dow:"MON",leg:"solo",title:"Solo: Stanford",img:"%%IMG_stanford%%",
-  note:"<b>Solo kit:</b> charged phone + power bank, live location on, proof of age. Trains every 30 min — a missed one costs half an hour, nothing more. Muni is free under 18.",
+ {id:24,dow:"MON",leg:"solo",title:"Solo: BASED run → Apple Park → Cantor",img:"%%IMG_applepark%%",
+  note:"<b>Solo kit:</b> charged phone + power bank, live location on, proof of age. Trains every 30 min — a missed one costs half an hour, nothing more.",
   acts:[
-   {e:"🚆",title:"Caltrain from Menlo Park — Palo Alto is ONE stop",badge:"walkup",when:"~09:45 · 4 MIN RIDE",d:"Trains every 30 min; you could even walk or bike it (~35 min down Alma). Buy the youth day pass at the machine.",loc:["Menlo Park Station","Menlo Park Caltrain Station"],price:"$2 youth day pass",link:["caltrain.com","https://www.caltrain.com"]},
-   {e:"🏛️",title:"Stanford campus — Quad, Memorial Church, the Oval",badge:"free",when:"10:30",d:"Free Marguerite shuttle from the transit center, self-guided from the Visitor Center. Hoover Tower is closed — the Quad is the show.",loc:["Stanford Visitor Center","295 Galvez St Stanford"],price:"$0",link:["visit.stanford.edu","https://visit.stanford.edu"]},
-   {e:"🍔",title:"Gott's Roadside, Town & Country",badge:"walkup",when:"12:30",d:"Burgers + shakes across from the station.",loc:["Gott's Roadside, Palo Alto","Gott's Roadside Palo Alto"],price:"~$15–25"},
-   {e:"🗿",title:"Cantor Arts Center — only open TODAY of your solo days",badge:"free",when:"13:30",d:"Free entry; the Rodin bronze garden is the famous bit.",loc:["Cantor Arts Center","Cantor Arts Center Stanford"],price:"$0",link:["museum.stanford.edu","https://museum.stanford.edu"]},
-   {e:"🛍️",title:"Stanford Shopping Center",badge:"walkup",when:"15:00",d:"Open-air, 140+ stores, next to the station.",loc:["Stanford Shopping Center","Stanford Shopping Center Palo Alto"],price:"—"},
-   {e:"🚆",title:"One stop home to Menlo Park",badge:"walkup",when:"WHENEVER",d:"Any northbound train, 4 minutes. Hard to miss dinner.",loc:["Palo Alto Station","Palo Alto Station"],price:"covered by day pass"}
-  ],
-  alts:[
-   {e:"✈️",title:"Bonus spotting run to Millbrae",badge:"free",when:"SWAP",d:"~30 min up the line + 15-min walk to Bayfront Park for the afternoon widebody bank — or save it for Thu–Sat when you're back at the Dylan.",loc:["Bayfront Park, Millbrae","Bayfront Park Millbrae Ave Millbrae CA"],price:"$0",link:["Flightradar24","https://www.flightradar24.com"]}
-  ]},
- {id:25,dow:"TUE",leg:"solo",title:"Solo: BASED run → Apple Park → heavies",img:"%%IMG_applepark%%",
-  acts:[
-   {e:"🚆",title:"Caltrain south from Menlo Park",badge:"walkup",when:"~09:20 · ~20 MIN",d:"Trains every 30 min to Sunnyvale. Youth day pass again.",loc:["Menlo Park Station","Menlo Park Caltrain Station"],price:"$2"},
+   {e:"🚆",title:"Caltrain south from Menlo Park",badge:"walkup",when:"~09:20 · ~20 MIN",d:"Trains every 30 min to Sunnyvale. Buy the $2 youth day pass at the machine.",loc:["Menlo Park Station","Menlo Park Caltrain Station"],price:"$2 youth day pass",link:["caltrain.com","https://www.caltrain.com"]},
    {e:"🧴",title:"Target Sunnyvale — the BASED Bodyworks shelf",badge:"walkup",when:"09:50",d:"Men's grooming / hair-care aisle, two blocks from the station. Check stock in the Target app the night before.",loc:["Target, 298 W McKinley Ave","Target 298 W McKinley Ave Sunnyvale"],price:"the haul is on you",link:["Store page","https://www.target.com/sl/sunnyvale/2584"]},
    {e:"🍎",title:"Apple Park Visitor Center",badge:"free",when:"11:15",d:"VTA bus 53 (~20 min) + 10-min walk. Roof terrace over the ring, café lunch, Park-exclusive merch, Vision Pro demos.",loc:["Apple Park Visitor Center","Apple Park Visitor Center Cupertino"],price:"free · bus $1.25 youth",link:["Visitor Center","https://www.apple.com/retail/appleparkvisitorcenter/"]},
-   {e:"✈️",title:"Optional: ride north to Millbrae for the widebody bank",badge:"free",when:"15:15–17:00",d:"~40 min up the line + 15-min walk to Bayfront Park. Head-on 28L/28R arrivals, late-afternoon international heavies, A350s inbound. Then ~30 min back to Menlo — or save it for Thu–Sat when the Dylan puts the park in your backyard.",loc:["Bayfront Park, Millbrae","Bayfront Park Millbrae Ave Millbrae CA"],price:"$0",link:["Flightradar24","https://www.flightradar24.com"]}
+   {e:"🗿",title:"Cantor Arts Center on the way home — only open TODAY",badge:"free",when:"15:00",d:"Hop off at Palo Alto, free Marguerite shuttle or 15-min walk. Free entry; the Rodin bronze garden is the famous bit. Closed Tue + Wed, so it lives here.",loc:["Cantor Arts Center","Cantor Arts Center Stanford"],price:"$0",link:["museum.stanford.edu","https://museum.stanford.edu"]},
+   {e:"🚆",title:"One stop home to Menlo Park",badge:"walkup",when:"~17:30",d:"4 minutes. Hard to miss dinner.",loc:["Palo Alto Station","Palo Alto Station"],price:"covered by day pass"}
   ],
   alts:[
-   {e:"🎯",title:"Backup Target: Mountain View",badge:"walkup",when:"IF SOLD OUT",d:"555 Showers Dr — short walk from San Antonio station, one stop north.",loc:["Target, 555 Showers Dr","Target 555 Showers Dr Mountain View"],price:"—",link:["Store page","https://www.target.com/sl/mountain-view/322"]},
-   {e:"🍜",title:"Ramen Seas, Murphy Ave",badge:"walkup",when:"LUNCH — CLOSES 14:00",d:"3 min from Sunnyvale station.",loc:["Ramen Seas, Sunnyvale","Ramen Seas Sunnyvale"],price:"~$16–20"}
+   {e:"🎯",title:"Backup Target: Mountain View",badge:"walkup",when:"IF SOLD OUT",d:"555 Showers Dr — short walk from San Antonio station.",loc:["Target, 555 Showers Dr","Target 555 Showers Dr Mountain View"],price:"—",link:["Store page","https://www.target.com/sl/mountain-view/322"]},
+   {e:"🍜",title:"Ramen Seas, Murphy Ave",badge:"walkup",when:"LUNCH — CLOSES 14:00",d:"3 min from Sunnyvale station, instead of the Apple café.",loc:["Ramen Seas, Sunnyvale","Ramen Seas Sunnyvale"],price:"~$16–20"}
+  ]},
+ {id:25,dow:"TUE",leg:"solo",title:"Stanford → Meta with dad",img:"%%IMG_stanford%%",
+  note:"<b>The plan dad asked for:</b> Stanford in the morning, then both Meta campuses in the afternoon — Classic (1 Hacker Way) and the new MPK Gehry buildings. Inside Meta you are dad's badged guest the whole time; the 👍 Like sign out front is the public bit.",
+  acts:[
+   {e:"🚆",title:"One stop to Palo Alto, Marguerite into campus",badge:"walkup",when:"~09:30",d:"4-min ride (or bike it down Alma). Free Marguerite shuttle from the transit center.",loc:["Menlo Park Station","Menlo Park Caltrain Station"],price:"$2 youth day pass",link:["caltrain.com","https://www.caltrain.com"]},
+   {e:"🏛️",title:"Stanford — Quad, Memorial Church, Palm Drive, bookstore",badge:"free",when:"10:00–12:30",d:"Self-guided from the Visitor Center, 295 Galvez St. Hoover Tower is closed for renovation; Cantor is closed Tuesdays (you got it Monday) — the Quad is the show.",loc:["Stanford Visitor Center","295 Galvez St Stanford"],price:"$0",link:["visit.stanford.edu","https://visit.stanford.edu"]},
+   {e:"🍔",title:"Gott's Roadside, Town & Country",badge:"walkup",when:"12:30",d:"Burgers + shakes across from the station.",loc:["Gott's Roadside, Palo Alto","Gott's Roadside Palo Alto"],price:"~$15–25"},
+   {e:"🚗",title:"Over to Meta — dad grabs you or a quick ride",badge:"walkup",when:"13:45 · ~15 MIN",d:"Train one stop back to Menlo Park, then dad picks you up or rideshare up Willow Rd to the Bayfront campuses (~3.5 mi).",loc:["Meta, 1 Hacker Way","1 Hacker Way Menlo Park"],price:"ride ~$10–15"},
+   {e:"👍",title:"Meta Classic — the Like sign + campus with dad",badge:"free",when:"14:15",d:"Photo at the famous thumbs-up sign at 1 Hacker Way (public), then badge in as dad's guest: Hacker Square, the old-school Classic campus.",loc:["Meta sign, 1 Hacker Way","Meta headquarters sign 1 Hacker Way Menlo Park"],price:"$0"},
+   {e:"🌳",title:"MPK 20/21 — the Gehry buildings + roof garden",badge:"free",when:"16:00",d:"Across the road: the giant open-plan halls and the 9-acre rooftop park, escorted by dad. Dinner on campus with him if guests are on, otherwise downtown Menlo.",loc:["Meta MPK 21","Meta MPK 21 Constitution Dr Menlo Park"],price:"$0"}
+  ],
+  alts:[
+   {e:"🔁",title:"Dad's meetings clash? Flip the halves",badge:"walkup",when:"FLEX",d:"Meta in the morning, Stanford after lunch — everything here is walk-up except dad's calendar.",loc:["Menlo Park","Menlo Park CA"],price:"—"},
+   {e:"🛍️",title:"Stanford Shopping Center stop",badge:"walkup",when:"ADD-ON",d:"Next to Palo Alto station if there is slack before Meta.",loc:["Stanford Shopping Center","Stanford Shopping Center Palo Alto"],price:"—"}
   ]},
  {id:26,dow:"WED",leg:"solo",title:"Solo: Mountain View tech day",
   acts:[
@@ -338,7 +367,9 @@ const DAYS = [
    {e:"🛫",title:"SkyTerrace — SFO's free observation deck",badge:"free",when:"16:30",d:"Waymo back, grab bags, hotel shuttle to SFO. T2 landside, open Sundays to 18:00 — watch the heavies you're about to join.",loc:["SFO Terminal 2","SFO Terminal 2"],price:"$0",link:["flysfo.com","https://www.flysfo.com"]},
    {e:"🛬",title:"Wheels up",badge:"free",when:"20:00",d:"This time you're in the back, judging the crew's flare from row 40.",loc:["SFO International Terminal","SFO International Terminal"],price:"—"}
   ]},
- {id:"info",util:"INFO",title:"Cheat sheet",info:true}
+ {id:"food",util:"FOOD",u:"🍜",title:"Food finder",food:true},
+ {id:"pack",util:"PACK",u:"🎒",title:"Packing list",pack:true},
+ {id:"info",util:"INFO",u:"ℹ",title:"Cheat sheet",info:true}
 ];
 
 const bar = document.getElementById("daybar");
@@ -350,7 +381,7 @@ DAYS.forEach(d => {
   b.className = "daybtn" + (d.util ? " util" : "");
   if (d.leg) b.dataset.leg = d.leg;
   b.innerHTML = d.util
-    ? "<small>" + (d.id === "todo" ? "★" : "ℹ") + "</small><b>" + d.util + "</b>"
+    ? "<small>" + (d.id === "todo" ? "★" : (d.u || "ℹ")) + "</small><b>" + d.util + "</b>"
     : "<small>" + d.dow + "</small><b>" + d.id + "</b><span class='dot'></span>";
   b.addEventListener("click", () => show(d.id, true));
   b.id = "btn-" + d.id;
@@ -395,6 +426,8 @@ function show(id, fromClick) {
   if (d.img) h += "<figure class='dayphoto'><img src='" + d.img + "' alt=''></figure>";
   if (d.note) h += "<div class='note'>" + d.note + "</div>";
   if (d.info) { h += infoHTML(); }
+  if (d.food) { h += foodHTML(); }
+  if (d.pack) { h += packHTML(); }
   if (d.acts) {
     h += "<div class='sect'>" + (d.util ? "Tap to expand · ☆ = mark booked" : "The plan — tap anything") + "</div>";
     sortBooked(d.acts, d.id).forEach(a => h += card(d.id, a));
@@ -410,6 +443,12 @@ function show(id, fromClick) {
     const key = b.dataset.act;
     booked.has(key) ? booked.delete(key) : booked.add(key);
     localStorage.setItem("cali26", JSON.stringify([...booked]));
+    show(current, false);
+  }));
+  panel.querySelectorAll(".pk").forEach(b => b.addEventListener("click", () => {
+    const key = b.dataset.pk;
+    packed.has(key) ? packed.delete(key) : packed.add(key);
+    localStorage.setItem("cali26pack", JSON.stringify([...packed]));
     show(current, false);
   }));
   if (fromClick) history.replaceState(null, "", "#d" + d.id);
@@ -450,6 +489,59 @@ function infoHTML() {
   </div>`;
 }
 
+const CRAVINGS = [["🍔","Burgers","burgers"],["🍕","Pizza","pizza"],["🍜","Ramen","ramen"],["🌮","Tacos","tacos"],["🍣","Sushi","sushi"],["🧋","Boba","boba tea"],["🍦","Ice cream","ice cream"],["🥞","Breakfast","breakfast"],["🍟","In-N-Out","In-N-Out Burger"],["☕","Coffee","coffee"]];
+const FOODSPOTS = [
+ ["Truckee (Aug 19–22)",[
+  ["🍕","Commercial Row","The historic main drag — pizza, burgers, tacos, all of it","Commercial Row Truckee CA"],
+  ["🍔","In-N-Out Auburn","The I-80 drive-day classic","In-N-Out Burger Auburn CA"]]],
+ ["SF & Millbrae (Aug 22–23, 27–29)",[
+  ["🍲","Boudin — chowder bread bowl","Fisherman's Wharf rite of passage","Boudin Bakery Fishermans Wharf San Francisco"],
+  ["🍟","In-N-Out Fisherman's Wharf","333 Jefferson St, 3 blocks from the bike shop","In-N-Out Burger Fishermans Wharf San Francisco"],
+  ["🥡","Ferry Building food hall","Everything, all good — ferry days start and end here","San Francisco Ferry Building"],
+  ["🥟","Millbrae dim sum row","Broadway Ave by the hotel is a legit Hong Kong food strip","dim sum Broadway Millbrae CA"]]],
+ ["Menlo Park & solo days (Aug 23–27)",[
+  ["🍔","Gott's Roadside","Town & Country, across from Palo Alto station","Gott's Roadside Palo Alto"],
+  ["🍜","Ramen Seas","Murphy Ave, 3 min from Sunnyvale station — closes 14:00","Ramen Seas Sunnyvale"],
+  ["🍕","Doppio Zero","Wood-fired, Castro St Mountain View — order by 14:30","Doppio Zero Mountain View"],
+  ["🌮","Downtown Menlo — Santa Cruz Ave","The home-base dinner strip, 5 min from the station","restaurants Santa Cruz Avenue Menlo Park"]]],
+ ["Santa Cruz (Aug 28)",[
+  ["🦀","The Wharf","Chowder + sea lions under your feet","Santa Cruz Wharf restaurants"],
+  ["🍦","Ice cream on Pacific Ave","Post-redwoods reward","ice cream Pacific Avenue Santa Cruz"]]],
+ ["Golden Gate Park (Aug 30)",[
+  ["🚚","Music Concourse food trucks","Lunch between the Academy and the Bandshell","Golden Gate Park Music Concourse"]]]
+];
+function foodHTML() {
+  let h = "<div class='note'><b>How it works:</b> tap a craving and Google Maps opens showing what's around you right now — it uses your phone's live location, so it works in Truckee, the Wharf, Menlo, anywhere. Below that: the picks already road-tested by this plan.</div>";
+  h += "<div class='sect'>I want…</div><div class='cravings'>";
+  CRAVINGS.forEach(c => { h += "<a class='crave' target='_blank' rel='noopener' href='" + M(c[2]) + "'><span>" + c[0] + "</span>" + c[1] + "</a>"; });
+  h += "</div>";
+  FOODSPOTS.forEach(area => {
+    h += "<div class='sect'>" + area[0] + "</div>";
+    area[1].forEach(f => {
+      h += "<a class='fooditem' target='_blank' rel='noopener' href='" + M(f[3]) + "'><span class='emoji'>" + f[0] + "</span><span><b>" + f[1] + "</b><small>" + f[2] + "</small></span><span class='go'>📍</span></a>";
+    });
+  });
+  return h;
+}
+const PACKLIST = [
+ ["Docs","Passports + ESTA printouts|Dad: driving licence for the rentals|Proof of age for youth fares (passport copy on phone)|Booking confirmations saved offline"],
+ ["Tech","US plug adapters (Type A) + chargers|Power bank — solo days run on your phone|eSIM / roaming plan sorted|Offline Google Maps: SF Bay + Tahoe|Apps: Caltrain, Clipper, Target, Flightradar24, Waymo (dad)"],
+ ["Riding","Own MTB gloves if you have them|Grippy shoes for the bike park|Thin beanie — fits under helmet, bridge is COLD|Small backpack for solo days + rides"],
+ ["Clothes","Windbreaker each — non-negotiable for the bridge|Hoodie / layers, SF is 65°F in August|Swim stuff — Donner Lake + hotel pools|Sunglasses"],
+ ["Bits","Sunscreen + lip balm (Tahoe altitude sun)|Quarters for Musée Mécanique|Binoculars for Bayfront Park spotting|Water bottles|~$100 in small bills"]
+];
+function packHTML() {
+  const all = PACKLIST.reduce((n, g) => n + g[1].split("|").length, 0);
+  let h = "<div class='packbar'>" + packed.size + " / " + all + " PACKED</div>";
+  PACKLIST.forEach(g => {
+    h += "<div class='sect'>" + g[0] + "</div>";
+    g[1].split("|").forEach(item => {
+      const on = packed.has(item);
+      h += "<button class='pk" + (on ? " on" : "") + "' data-pk='" + item.replace(/'/g, "&#39;") + "'><span class='box'>" + (on ? "✓" : "") + "</span><b>" + item + "</b></button>";
+    });
+  });
+  return h;
+}
 const hash = location.hash.replace("#d", "");
 show(hash && DAYS.some(x => String(x.id) === hash) ? hash : "todo", false);
 </script>
