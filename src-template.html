@@ -1,515 +1,431 @@
 <title>Fogust Grand Tour</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #eef1f2;
-    --surface: #ffffff;
-    --surface-2: #f7f9f9;
-    --ink: #1c2528;
-    --muted: #5a6b70;
-    --line: #d6dcde;
-    --bridge: #b5492a;
-    --bridge-soft: #f6e6df;
-    --pine: #2f6b4f;
-    --pine-soft: #e2eee7;
-    --rail: #3a6b8c;
-    --rail-soft: #e2ebf1;
-    --warn: #8a6414;
-    --warn-soft: #f6eed7;
-    --warn-edge: #d8b95c;
+  :root{
+    --night:#131735; --panel:#1c2142; --panel2:#252b52; --line:#31386b;
+    --ink:#f5f0e6; --muted:#a3abcf; --gold:#ffc15e; --orange:#ff8c42; --coral:#ff5d73;
+    --tahoe:#66d9a3; --family:#ff9d5c; --solo:#7cc4ff; --pick:#d8a7ff;
+    --silhouette:#0c1028;
   }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #14191b;
-      --surface: #1d2427;
-      --surface-2: #232c30;
-      --ink: #e8eced;
-      --muted: #97a7ac;
-      --line: #34413f;
-      --bridge: #e0714c;
-      --bridge-soft: #3a2620;
-      --pine: #63b189;
-      --pine-soft: #1e3229;
-      --rail: #74a8c9;
-      --rail-soft: #1f2f3a;
-      --warn: #e3c06a;
-      --warn-soft: #322a17;
-      --warn-edge: #7a6428;
-    }
-  }
-  :root[data-theme="dark"] {
-    --bg: #14191b;
-    --surface: #1d2427;
-    --surface-2: #232c30;
-    --ink: #e8eced;
-    --muted: #97a7ac;
-    --line: #34413f;
-    --bridge: #e0714c;
-    --bridge-soft: #3a2620;
-    --pine: #63b189;
-    --pine-soft: #1e3229;
-    --rail: #74a8c9;
-    --rail-soft: #1f2f3a;
-    --warn: #e3c06a;
-    --warn-soft: #322a17;
-    --warn-edge: #7a6428;
-  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--night);color:var(--ink);
+    font-family:"Outfit","Segoe UI",system-ui,sans-serif;line-height:1.5}
+  .display{font-family:"Bungee","Arial Black",Impact,sans-serif;font-weight:400}
 
-  * { box-sizing: border-box; }
-  body {
-    background: var(--bg);
-    color: var(--ink);
-    font-family: "Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif;
-    line-height: 1.55;
-    margin: 0;
-    padding: 2.5rem 1.25rem 4rem;
-  }
-  .wrap { max-width: 720px; margin: 0 auto; }
+  /* ---------- HERO ---------- */
+  .hero{position:relative;height:min(58vh,420px);min-height:300px;overflow:hidden;
+    background:linear-gradient(#1a1f4b 0%,#4b2a5e 34%,#b3455e 58%,#ff8c42 78%,#ffc15e 100%)}
+  .sun{position:absolute;left:50%;bottom:34px;width:120px;height:120px;margin-left:-60px;
+    border-radius:50%;background:#ffe9b0;
+    box-shadow:0 0 60px 30px rgba(255,220,140,.55),0 0 140px 70px rgba(255,150,80,.35);
+    animation:sunGlow 7s ease-in-out infinite}
+  @keyframes sunGlow{50%{box-shadow:0 0 80px 40px rgba(255,220,140,.7),0 0 170px 90px rgba(255,150,80,.45)}}
+  .bridge{position:absolute;left:0;right:0;bottom:0;width:100%;height:auto;display:block}
+  .palm{position:absolute;bottom:-6px;width:150px;height:auto;transform-origin:50% 100%;
+    animation:sway 6s ease-in-out infinite}
+  .palm.p1{left:-18px}
+  .palm.p2{right:-24px;width:190px;animation-duration:7.5s;animation-delay:-2s}
+  .palm.p3{left:110px;width:90px;bottom:-4px;animation-duration:5.2s;animation-delay:-4s}
+  @keyframes sway{0%,100%{transform:rotate(-2.4deg)}50%{transform:rotate(2.4deg)}}
+  .hero-text{position:absolute;left:0;right:0;top:16%;text-align:center;padding:0 1rem;z-index:2}
+  .hero-text h1{margin:0;font-size:clamp(1.9rem,7vw,3.6rem);letter-spacing:.03em;color:#fff;
+    text-shadow:0 3px 0 rgba(30,20,60,.45),0 10px 30px rgba(30,20,60,.5)}
+  .hero-text h1 span{color:#ffe9b0}
+  .hero-text p{margin:.5rem 0 0;color:#ffe9d6;font-weight:600;font-size:clamp(.85rem,2.6vw,1.05rem);
+    text-shadow:0 2px 8px rgba(30,20,60,.6)}
 
-  .display, h1, h2, h3 {
-    font-family: "Avenir Next Condensed", "Arial Narrow", "Roboto Condensed", "Segoe UI", sans-serif;
-    text-wrap: balance;
-    margin: 0;
-  }
-  .eyebrow {
-    font-family: "Avenir Next Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--muted);
-  }
-  time, .mono {
-    font-family: "SF Mono", "Cascadia Code", Consolas, Menlo, monospace;
-    font-variant-numeric: tabular-nums;
-  }
+  /* ---------- DATE STRIP ---------- */
+  .daybar{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,#171b3d,#131735 80%);
+    border-bottom:1px solid var(--line);padding:.55rem .5rem;
+    display:flex;gap:.4rem;overflow-x:auto;scrollbar-width:thin}
+  .daybar::-webkit-scrollbar{height:5px}
+  .daybtn{flex:0 0 auto;border:1px solid var(--line);background:var(--panel);color:var(--muted);
+    border-radius:12px;padding:.35rem .65rem .45rem;cursor:pointer;text-align:center;min-width:56px;
+    transition:transform .15s ease,background .15s ease,color .15s ease;font-family:inherit}
+  .daybtn small{display:block;font-size:.58rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+  .daybtn b{display:block;font-family:"Bungee","Arial Black",Impact,sans-serif;font-weight:400;
+    font-size:1.15rem;line-height:1.15;color:var(--ink)}
+  .daybtn .dot{display:block;width:7px;height:7px;border-radius:50%;margin:.2rem auto 0;background:var(--muted)}
+  .daybtn[data-leg="tahoe"] .dot{background:var(--tahoe)}
+  .daybtn[data-leg="family"] .dot{background:var(--family)}
+  .daybtn[data-leg="solo"] .dot{background:var(--solo)}
+  .daybtn.util b{font-size:.8rem;padding-top:.3rem}
+  .daybtn:hover{transform:translateY(-2px)}
+  .daybtn.active{background:linear-gradient(160deg,#ff8c42,#ff5d73);border-color:#ffb15e;color:#fff3e2}
+  .daybtn.active b,.daybtn.active small{color:#fff}
+  .daybtn.active .dot{background:#fff}
+  .daybtn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 
-  header.masthead { margin-bottom: 2rem; }
-  header.masthead h1 {
-    font-size: clamp(2.4rem, 8vw, 3.4rem);
-    line-height: 1.05;
-    letter-spacing: 0.01em;
-    text-transform: uppercase;
-  }
-  header.masthead h1 em { font-style: normal; color: var(--bridge); }
-  .tripline {
-    margin-top: 0.6rem;
-    color: var(--muted);
-    font-size: 1.02rem;
-  }
-  .tripline strong { color: var(--ink); font-weight: 600; }
+  /* ---------- DAY PANEL ---------- */
+  .wrap{max-width:760px;margin:0 auto;padding:1.2rem 1rem 4rem}
+  .panel-head{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;margin:.6rem 0 .9rem}
+  .panel-head h2{margin:0;font-size:clamp(1.45rem,5vw,2.1rem);letter-spacing:.02em}
+  .panel-head .daynum{color:var(--gold)}
+  .legchip{font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+    padding:.25rem .6rem;border-radius:999px;background:var(--panel2)}
+  .legchip.tahoe{color:var(--tahoe)} .legchip.family{color:var(--family)} .legchip.solo{color:var(--solo)}
+  .dayphoto{border-radius:14px;overflow:hidden;margin:0 0 1rem;border:1px solid var(--line)}
+  .dayphoto img{width:100%;max-height:280px;object-fit:cover;display:block}
+  .fadein{animation:rise .35s ease both}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
-  .legend { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.1rem; }
-  .chip {
-    display: inline-block;
-    font-family: "Avenir Next Condensed", "Arial Narrow", sans-serif;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.09em;
-    font-size: 0.72rem;
-    padding: 0.22rem 0.6rem;
-    border-radius: 999px;
-    border: 1px solid transparent;
+  .act{display:grid;grid-template-columns:4.2rem 1fr;gap:.8rem;background:var(--panel);
+    border:1px solid var(--line);border-radius:14px;padding:.9rem 1rem;margin-bottom:.7rem;
+    transition:transform .15s ease,border-color .15s ease}
+  .act:hover{transform:translateY(-2px);border-color:#4a538f}
+  .act time{font-weight:800;color:var(--gold);font-variant-numeric:tabular-nums;font-size:.95rem;padding-top:.1rem}
+  .act h3{margin:0 0 .15rem;font-size:1.05rem;font-weight:800;display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+  .act p{margin:0 0 .55rem;color:var(--muted);font-size:.92rem}
+  .badge{font-size:.6rem;font-weight:800;letter-spacing:.1em;padding:.18rem .5rem;border-radius:999px;text-transform:uppercase}
+  .b-book{background:#3d3218;color:var(--gold)}
+  .b-walkup{background:#1e3550;color:var(--solo)}
+  .b-free{background:#1d3b2d;color:var(--tahoe)}
+  .b-pick{background:#372b4c;color:var(--pick)}
+  .b-ifopen{background:#432433;color:var(--coral)}
+  .meta{display:flex;flex-wrap:wrap;gap:.45rem}
+  .chip{display:inline-flex;align-items:center;gap:.35rem;font-size:.8rem;font-weight:600;
+    padding:.32rem .7rem;border-radius:999px;background:var(--panel2);color:var(--ink);
+    text-decoration:none;border:1px solid transparent}
+  a.chip:hover{border-color:var(--gold);color:var(--gold)}
+  .chip.price{color:var(--gold);font-variant-numeric:tabular-nums}
+  .altdivider{display:flex;align-items:center;gap:.8rem;margin:1.4rem 0 .8rem;color:var(--pick);
+    font-size:.72rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+  .altdivider::before,.altdivider::after{content:"";flex:1;height:1px;background:var(--line)}
+  .act.alt{opacity:.82;background:#181d3c}
+  .note{background:#2c2340;border:1px solid #4a3a68;border-radius:12px;padding:.7rem .9rem;
+    font-size:.88rem;margin:.9rem 0;color:#e8ddf5}
+  .note b{color:var(--pick)}
+  .infoblock h3{font-size:1rem;letter-spacing:.04em;color:var(--gold);margin:1.3rem 0 .5rem}
+  .infoblock table{width:100%;border-collapse:collapse;font-size:.86rem;background:var(--panel);
+    border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .infoblock td{padding:.5rem .7rem;border-top:1px solid var(--line);vertical-align:top}
+  .infoblock tr:first-child td{border-top:none}
+  .infoblock td:first-child{color:var(--muted);font-weight:600;white-space:nowrap}
+  .mono{font-variant-numeric:tabular-nums}
+  footer{color:var(--muted);font-size:.75rem;border-top:1px solid var(--line);
+    margin-top:2.5rem;padding-top:1rem;line-height:1.6}
+  footer a{color:var(--solo)}
+  @media (max-width:520px){ .act{grid-template-columns:1fr} .act time{padding:0} }
+  @media (prefers-reduced-motion:reduce){
+    .palm,.sun{animation:none}
+    .fadein{animation:none}
+    .act:hover,.daybtn:hover{transform:none}
+    html{scroll-behavior:auto}
   }
-  .chip.family { background: var(--bridge-soft); color: var(--bridge); }
-  .chip.tahoe  { background: var(--pine-soft);  color: var(--pine); }
-  .chip.solo   { background: var(--rail-soft);  color: var(--rail); }
-
-  .panel {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 1.1rem 1.25rem;
-    margin: 1.25rem 0;
-  }
-  .panel h2 { font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
-  .panel.urgent { border-left: 4px solid var(--bridge); }
-  .panel.warning { background: var(--warn-soft); border-color: var(--warn-edge); border-left: 4px solid var(--warn-edge); }
-  .panel.warning h2 { color: var(--warn); }
-  .panel ol, .panel ul { margin: 0.4rem 0 0; padding-left: 1.2rem; }
-  .panel li { margin: 0.45rem 0; }
-  .panel li strong { font-weight: 600; }
-
-  .days { margin-top: 2.2rem; }
-  .day {
-    display: grid;
-    grid-template-columns: 26px 1fr;
-    gap: 0 0.9rem;
-    position: relative;
-  }
-  .day .railbar {
-    position: relative;
-  }
-  .day .railbar::before {
-    content: "";
-    position: absolute;
-    left: 11px; top: 0; bottom: 0;
-    width: 3px;
-    background: var(--line);
-  }
-  .day:first-of-type .railbar::before { top: 1.4rem; }
-  .day:last-of-type .railbar::before { bottom: auto; height: 1.4rem; }
-  .day .dot {
-    position: absolute;
-    left: 4px; top: 1.05rem;
-    width: 17px; height: 17px;
-    border-radius: 50%;
-    border: 3px solid var(--bg);
-    background: var(--muted);
-    z-index: 1;
-  }
-  .day[data-leg="family"] .dot { background: var(--bridge); }
-  .day[data-leg="tahoe"]  .dot { background: var(--pine); }
-  .day[data-leg="solo"]   .dot { background: var(--rail); }
-
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 1rem 1.2rem 1.15rem;
-    margin-bottom: 1.1rem;
-  }
-  .card > header {
-    display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 0.4rem 0.7rem;
-    margin-bottom: 0.55rem;
-  }
-  .card h2 { font-size: 1.3rem; letter-spacing: 0.02em; }
-  .card h2 .dow { color: var(--muted); font-weight: 500; }
-
-  ul.sched { list-style: none; margin: 0; padding: 0; }
-  ul.sched li {
-    display: grid;
-    grid-template-columns: 4.4rem 1fr;
-    gap: 0.8rem;
-    padding: 0.42rem 0;
-    border-top: 1px solid var(--line);
-  }
-  ul.sched li:first-child { border-top: none; }
-  ul.sched time { color: var(--muted); font-size: 0.86rem; padding-top: 0.15rem; white-space: nowrap; }
-  ul.sched p { margin: 0; }
-  ul.sched p small { color: var(--muted); display: block; margin-top: 0.1rem; }
-
-  figure.photo { margin: 0.15rem 0 0.8rem; border-radius: 7px; overflow: hidden; background: var(--surface-2); }
-  figure.photo img { width: 100%; height: auto; max-height: 300px; object-fit: cover; display: block; }
-  figure.photo.hero { margin: 1.2rem 0 0; border-radius: 10px; }
-  figure.photo.hero img { max-height: 330px; }
-
-  .note {
-    margin-top: 0.8rem;
-    padding: 0.6rem 0.8rem;
-    border-radius: 7px;
-    font-size: 0.92rem;
-    background: var(--surface-2);
-    border: 1px solid var(--line);
-  }
-  .note.warn { background: var(--warn-soft); border-color: var(--warn-edge); }
-  .note b { font-weight: 600; }
-
-  .cheats { margin-top: 2.5rem; }
-  .cheats h2 { font-size: 1.4rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.8rem; }
-  .cheats .fine-under { color: var(--muted); font-size: 0.85rem; margin-top: 0.5rem; }
-  .tablewrap { overflow-x: auto; }
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    font-size: 0.92rem;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-  }
-  th, td { text-align: left; padding: 0.5rem 0.75rem; border-top: 1px solid var(--line); vertical-align: top; }
-  thead th { border-top: none; font-family: "Avenir Next Condensed", "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.75rem; color: var(--muted); }
-  td.mono { white-space: nowrap; }
-
-  footer.fine {
-    margin-top: 2.5rem;
-    color: var(--muted);
-    font-size: 0.85rem;
-    border-top: 1px solid var(--line);
-    padding-top: 1rem;
-  }
-  a { color: var(--rail); }
 </style>
 
-<div class="wrap">
-  <header class="masthead">
-    <p class="eyebrow">San Francisco &amp; Tahoe · Aug 19 – 30, 2026</p>
-    <h1>Fogust <em>Grand Tour</em></h1>
-    <p class="tripline">Land <strong>Wed Aug 19, 4:00 pm</strong> and drive straight for Tahoe → fly out <strong>Sun Aug 30, 8:00 pm</strong>. A full day of downhill at Northstar, the bridge-to-Tiburon e-bike loop, an aircraft-carrier day, three solo Caltrain days, giant redwoods, an island bike raid, and a Golden Gate Park finale.</p>
-    <div class="legend">
-      <span class="chip tahoe">Tahoe · Northstar</span>
-      <span class="chip family">Family · SF &amp; beyond</span>
-      <span class="chip solo">Solo · Caltrain days</span>
-    </div>
-    <figure class="photo hero"><img src="%%IMG_bridge%%" alt="Golden Gate Bridge with fog rolling over the far tower"></figure>
-  </header>
-
-  <section class="panel urgent">
-    <h2>Book these today</h2>
-    <ol>
-      <li><strong>Northstar lift tickets + downhill bike rentals for Thursday</strong> online at <a href="https://www.northstarcalifornia.com">northstarcalifornia.com</a> (~$99/day tickets; booking rentals ahead saves ~20% and the youth downhill fleet is small — a race is on site that weekend). Full-face helmet and gloves come with the rental. Confirm youth pricing and the Bike&nbsp;101 lesson package on 1-800-842-8062.</li>
-      <li><strong>Both hotels, on Booking.com</strong> — <b><a href="https://www.booking.com/hotel/us/truckee-donner-lodge.html">Truckee Donner Lodge</a></b> for Wed + Thu nights (~$132–149, Booking 8.3) and <b><a href="https://www.booking.com/hotel/us/san-francisco-airport-south-travelodge.html">The Dylan Hotel at SFO</a></b>, Millbrae, for Fri Aug 21 → Sun Aug 30, 9 nights (~$150–210/night, Booking 8.5). Book today: the <b>Pokémon World Championships hit Moscone Aug 28–30</b> and are surge-pricing the city — that's the $600 Hyatt quote — and the enduro race fills Truckee. Details in <b>Basecamps</b> below.</li>
-      <li><strong>1-day car rental for Fri Aug 28</strong> — from the SFO Rental Car Center, one free hotel-shuttle hop away and open around the clock, so pickup and Saturday-morning return have zero branch-hours drama. The redwood grove needs no reservation. While you're at it, check <a href="https://beachboardwalk.com/hours">beachboardwalk.com/hours</a> — Boardwalk <i>rides</i> are likely weekends-only by late August; the beach, wharf, and arcade are open regardless.</li>
-      <li><strong><a href="https://www.calacademy.org">California Academy of Sciences</a> for Sun Aug 30</strong> — tickets are date-specific (adult ~$49–55, youth 13–18 ~$45–49). Your flight day works because it opens at 11:00 — buy the opening slot.</li>
-      <li><strong>Call <a href="https://www.blazingsaddles.com/san-francisco/bikes-and-rates/electric-bikes">Blazing Saddles</a> (415-202-8888)</strong> — reserve the throttle "E-Blazer" e-bikes for Sat Aug 22 and ask the one question that decides the route: <strong>does it weigh under 50 lb?</strong> That's the ferry's e-bike limit and the shop doesn't publish the number. Under 50 → Tiburon loop as planned. Over 50 → see the fallback on the Saturday card.</li>
-    </ol>
-  </section>
-
-  <section class="panel warning">
-    <h2>The Waymo rule, straight up</h2>
-    <p>Waymo's own policy: riders must be <strong>18+</strong> to ride alone. Teen accounts exist only for ages 14–17 and only in Phoenix so far. A 13-year-old riding solo on a parent's account breaks the terms of service and can get that account suspended. This plan is built so <strong>every solo day works on Caltrain + walking</strong> — Waymo is for the days an adult is riding along. Bonus rule that works in your favor: <strong>regular Muni is free for everyone 18 and under, visitors included</strong> — just get on (cable cars excepted: $9 flat). Solo-day kit: charged phone + power bank, live location shared, proof of age for the youth fares. Trains run every 30 minutes, so a missed one is never a crisis.</p>
-  </section>
-
-  <div class="days">
-
-    <section class="day" data-leg="tahoe">
-      <div class="railbar"><span class="dot"></span></div>
-      <div class="card">
-        <header><span class="chip tahoe">Tahoe</span><h2><span class="dow">Wed</span> Aug 19 · Land &amp; launch east</h2></header>
-        <ul class="sched">
-          <li><time>16:00</time><p>Land at SFO. Immigration + rental car pickup — realistically rolling by ~17:30.</p></li>
-          <li><time>17:30</time><p>I-80 East toward Truckee: 195 mi, ~3.5 h clean, but evening commute traffic drags the stretch to Fairfield.<small>Dinner stop ~2 h in — Sacramento, or the In-N-Out off I-80 in Auburn, the classic road-trip call.</small></p></li>
-          <li><time>21:30</time><p>Check in: <b>Truckee Donner Lodge</b>, 10527 Cold Stream Rd — just off I-80 at the first Truckee exit, so it's literally on your arrival route. Straight to bed.<small>Everyone fading? Totally fine to stop in Sacramento (~2 h) or Auburn (~2.5 h) and finish the last 1–1.5 h in the morning — lifts don't spin until 10:00.</small></p></li>
-        </ul>
-        <div class="note">I-80's Sierra roadwork runs at night (20:00–06:00) this summer — check <b>quickmap.dot.ca.gov</b> at the dinner stop. Worst case it's slow single-lane sections over Donner, not a closure.</div>
-      </div>
-    </section>
-
-    <section class="day" data-leg="tahoe">
-      <div class="railbar"><span class="dot"></span></div>
-      <div class="card">
-        <header><span class="chip tahoe">Tahoe</span><h2><span class="dow">Thu</span> Aug 20 · Northstar, the full send</h2></header>
-        <figure class="photo"><img src="%%IMG_tahoe%%" alt="Clear turquoise water and granite boulders at Sand Harbor, Lake Tahoe"></figure>
-        <ul class="sched">
-          <li><time>08:30</time><p>Free hot breakfast at the lodge (6:30–9:30 — eggs, bacon, the pancake machine). Stopped short last night? Finish the drive now; you'll still beat the lifts.</p></li>
-          <li><time>09:15</time><p>To Northstar: I-80 east → exit 188B → CA-267 to Northstar Drive, ~20 min. Summer parking is free, no reservation. Pick up pre-booked downhill bikes + armor in the village.</p></li>
-          <li><time>10:00</time><p>Lifts spin 10:00–17:00 (Big Springs Gondola → Vista Express → Tahoe Zephyr) — a full day, first chair to last.</p></li>
-          <li><time>flow</time><p><b>You ride flow — this is your mountain.</b> Northstar's calling card is <b>Livewire</b>: the famous machine-built flow/jump line, freshly rebuilt for 2026 — berms, tables, rollers top to bottom. Warm up on the green/blue machine-groomed flow lines first lap, then session Livewire the rest of the day; grab the trail map at the rental shop and ask the crew for the current flow progression (they'll point you to which blues feed into it).<small>First lift-served day ever? The Bike 101 package (ticket + gear + lesson) gets you dialed by noon.</small></p></li>
-          <li><time>17:00</time><p>Back to the lodge, pizza in downtown Truckee, collapse.</p></li>
-        </ul>
-        <div class="note"><b>Why Thursday is the day:</b> the California Enduro Series race takes over parts of the mountain from Friday's course practice through the weekend. Thursday is the cleanest, quietest park day of the week — send it, first chair to last.</div>
-      </div>
-    </section>
-
-    <section class="day" data-leg="tahoe">
-      <div class="railbar"><span class="dot"></span></div>
-      <div class="card">
-        <header><span class="chip tahoe">Tahoe</span><h2><span class="dow">Fri</span> Aug 21 · Head back west</h2></header>
-        <ul class="sched">
-          <li><time>08:30</time><p>Lodge breakfast, load the car. Optional 20-minute detour: <b>Donner Lake</b> is right there — a toe-dip in actual alpine water before leaving the mountains.</p></li>
-          <li><time>09:30</time><p>Roll west on I-80 — you're driving against the incoming Tahoe weekend traffic, ~3.5 h. Check <b>quickmap.dot.ca.gov</b> before leaving.</p></li>
-          <li><time>13:30</time><p>Check in: <b>The Dylan Hotel at SFO</b>, Millbrae — 3 minutes from Millbrae Caltrain + BART, planes on the approach right overhead. Park the car at the hotel (motor-lodge parking; confirm free at booking).</p></li>
-          <li><time>15:00</time><p>BART from Millbrae to <b>Embarcadero</b> (~35 min): <b>Ferry Building</b> food hall + Embarcadero stroll — and while you're there, <b>buy Saturday's $7 youth ferry ticket / sort the Youth Clipper at the machines</b>. BART home, early night: tomorrow is the big ride.</p></li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="day" data-leg="family">
-      <div class="railbar"><span class="dot"></span></div>
-      <div class="card">
-        <header><span class="chip family">Family</span><h2><span class="dow">Sat</span> Aug 22 · The Tiburon loop</h2></header>
-        <ul class="sched">
-          <li><time>08:15</time><p>Drive in from Millbrae (~25 min) and <b>hand back the Tahoe rental car</b> at the Wharf: Hertz / Avis at 500 Beach St or Enterprise at 350 Beach St, open ~08:00, three blocks from the bike shop.<small>Check the downtown-drop / one-way fee when booking the car at the airport.</small></p></li>
-          <li><time>09:00</time><p>Rent at Blazing Saddles, 2715 Hyde St (opens 08:00). <b>Throttle plan: the "E-Blazer" e-bike</b> — pedal-assist <i>plus</i> power-on-demand throttle, $80/day ($64 booked online). Class 2, so it's legal at 13 (California has no minimum age below Class 3), riders must be 5'0"+, parent signs for under-18s. Helmet and lock included — helmets are the law under 18.<small>Skip their Rad cargo e-bikes (65–77 lb — over the ferry limit). Backup shop with throttle e-bikes: Marina Bike Shop, 3749A Buchanan St, $89/day incl. a kids' 24" e-bike.</small></p></li>
-          <li><time>10:00</time><p>Roll: Wharf → Crissy Field → up to the bridge (4 mi) → across the Golden Gate (1.7 mi) → swoop down into Sausalito (2.8 mi).<small>Saturday perk: bikes get the west sidewalk to themselves all day — no dodging pedestrians. 15 mph limit, 5 mph at the towers.</small></p></li>
-          <li><time>12:30</time><p>Lunch in Sausalito, then the flat, pretty Mill Valley–Sausalito path onward to Tiburon (~7 mi). ~18 mi total, ~3 h of actual riding.</p></li>
-          <li><time>14:15</time><p>Be at the Tiburon ferry dock <b>30 min early</b> — bike space is first-come. <a href="https://www.goldengate.org/ferry/">Golden Gate Ferry</a> to SF: 14:45 (scenic, via Angel Island, lands 15:50) or the last boat at <b>17:15</b>. Bikes ride free.</p></li>
-          <li><time>16:00</time><p>Land at the Ferry Building, easy 1.5 mi flat cruise up the Embarcadero to return the bikes. Wharf dinner + a wander through <b>Musée Mécanique</b> (free, open late Saturdays — bring quarters).</p></li>
-        </ul>
-        <div class="note warn"><b>Ferry fares:</b> adults tap any contactless card ($8.50). The kid uses Friday's $7 youth ticket / Youth Clipper — Tiburon has no machine (Sausalito's terminal has one if you forgot, or just tap a contactless card and eat the $1.50 difference). Miss the 17:15? Ride 7 flat miles back to Sausalito for the 18:55.</div>
-        <div class="note"><b>E-bike fine print:</b> Golden Gate Ferry takes e-bikes <b>under 50 lb</b> only (power off on board; Tiburon boats carry max 30 bikes). If the E-Blazer turns out heavier, two outs: do Tiburon on standard pedal-assist e-bikes, or keep the throttles and end the ride in <b>Sausalito</b> instead — Blue &amp; Gold Fleet's Pier 41 ferry publishes no e-bike weight limit, bikes ride free, Blazing Saddles sells discounted tickets, and it lands 5 minutes from the shop (confirm heavy e-bikes on 415-705-8200). And to be clear on the Sur-Ron idea: that's legally an off-highway motorcycle — banned from the bridge and the bay path. Your downhill fix already happened at Northstar.</div>
-      </div>
-    </section>
-
-    <section class="day" data-leg="family">
-      <div class="railbar"><span class="dot"></span></div>
-      <div class="card">
-        <header><span class="chip family">Family</span><h2><span class="dow">Sun</span> Aug 23 · Carrier day: USS Hornet</h2></header>
-        <figure class="photo"><img src="%%IMG_hornet%%" alt="S-3 Viking jet parked on the USS Hornet's flight deck"></figure>
-        <ul class="sched">
-          <li><time>08:35</time><p>BART from Millbrae to Embarcadero (~35 min), then <a href="https://sanfranciscobayferry.com">SF Bay Ferry</a> from the docks behind the Ferry Building — the <b>Oakland &amp; Alameda</b> route to <b>Alameda Main Street</b>, sailings roughly hourly from 09:40 (~30–40 min; adult ~$5 / $2.50 Clipper, youth $2.50). A ferry ride across the whole bay is the right way to approach a warship.</p></li>
-          <li><time>10:30</time><p>Main Street terminal → the ship: AC Transit Line 96 toward W Atlantic &amp; Orion + a 1-mi walk, or scooters straight down the ~2 mi — the flight deck is visible most of the way.</p></li>
-          <li><time>11:00</time><p><b><a href="https://uss-hornet.org">USS Hornet Sea, Air &amp; Space Museum</a></b> ($25 adult / $12 youth, open 10:00–17:00, last entry 16:00): fighters and bombers on the hangar and flight decks, climb into the island, catapult gear up close — and the <b>Apollo 11 recovery exhibits</b>, because this exact ship pulled Armstrong, Aldrin, and Collins out of the Pacific. The +$12 docent tour gets you into engineering spaces the ticket alone doesn't.</p></li>
-          <li><time>15:00</time><p>Bus/scooter back to Main Street, ferry home across the bay. Easy evening — tomorrow the solo days begin.</p></li>
-        </ul>
-        <div class="note">Check <b>uss-hornet.org/events</b> before going — the ship occasionally hosts special-event days. Total aviation-day damage for three people: ~$75 in tickets vs $350 for one demo flight.</div>
-      </div>
-    </section>
-
-    <section class="day" data-leg="solo">
-      <div class="railbar"><span class="dot"></span></div>
-      <div class="card">
-        <header><span class="chip solo">Solo</span><h2><span class="dow">Mon</span> Aug 24 · Stanford</h2></header>
-        <figure class="photo"><img src="%%IMG_stanford%%" alt="The mosaic facade of Stanford Memorial Church on the Main Quad"></figure>
-        <ul class="sched">
-          <li><time>09:45</time><p>Caltrain south from <b>Millbrae — 3 minutes from the hotel door</b>. The 09:25 SF Local (#118) passes Millbrae ~09:45 → Palo Alto <b>10:14</b>. Buy the <b>$2 youth day pass</b> at the station machine (18 &amp; under; carry proof of age).</p></li>
-          <li><time>10:30</time><p>Free Marguerite shuttle from the transit center into campus (weekdays, no ID needed) — or walk Palm Drive straight at Memorial Church, ~25 min. Self-guided tour from the <a href="https://visit.stanford.edu">Visitor Center</a>, 295 Galvez St: Main Quad, Memorial Church, the Oval.</p></li>
-          <li><time>12:30</time><p>Lunch: <b>Gott's Roadside</b> at Town &amp; Country Village, directly across from the station — burgers and shakes, ~$15–25.</p></li>
-          <li><time>13:30</time><p><b><a href="https://museum.stanford.edu">Cantor Arts Center</a></b> — free, and today is the only solo day it's open (11:00–18:00, closed Tue/Wed). The Rodin bronzes outside are the famous bit.</p></li>
-          <li><time>15:00</time><p>Stanford Shopping Center, next to the station — open-air, 140+ stores.</p></li>
-          <li><time>17:10</time><p>Caltrain <b>#421 Limited</b> from Palo Alto, off at Millbrae ~17:35 — home in five minutes (or the 16:43 Express if you're done early).</p></li>
-        </ul>
-        <div class="note">Hoover Tower's observation deck is closed for renovation your whole trip — skip it, the Quad is the show anyway. Day budget: ~$2 trains + lunch; everything else is free.</div>
-      </div>
-    </section>
-
-    <section class="day" data-leg="solo">
-      <div class="railbar"><span class="dot"></span></div>
-      <div class="card">
-        <header><span class="chip solo">Solo</span><h2><span class="dow">Tue</span> Aug 25 · BASED run, Apple Park, heavies</h2></header>
-        <figure class="photo"><img src="%%IMG_applepark%%" alt="Aerial view of the Apple Park ring building in Cupertino"></figure>
-        <ul class="sched">
-          <li><time>09:05</time><p>Southbound <b>#412 Limited</b> from Millbrae (~09:05 — it left SF at 08:48) → Sunnyvale <b>09:43</b>. Youth day pass again ($2).</p></li>
-          <li><time>09:50</time><p><b><a href="https://www.target.com/sl/sunnyvale/2584">Target, 298 W McKinley Ave</a></b> — two blocks from the station. <b>BASED Bodyworks</b> lives in the men's grooming / hair-care aisle (the brand hit ~2,000 Targets in July).<small>Check stock in the Target app the night before; backup store: Target 555 Showers Dr, a short walk from San Antonio station, one stop north.</small></p></li>
-          <li><time>11:15</time><p><b>VTA bus 53</b> from Sunnyvale Transit Center (youth fare $1.25) ~20 min down Homestead Rd → hop off at Tantau, ~10-min walk to the <b><a href="https://www.apple.com/retail/appleparkvisitorcenter/">Apple Park Visitor Center</a></b>, 10600 N Tantau Ave. Free: roof terrace overlooking the ring, café for lunch, Apple Park–exclusive merch, Vision Pro demos.<small>The AR exhibition room is listed as temporarily closed; the terrace and store are the draw. Infinite Loop's store closed permanently — don't route there.</small></p></li>
-          <li><time>14:00</time><p>Bus 53 back to Sunnyvale, northbound Local to <b>Millbrae</b> (~40 min).</p></li>
-          <li><time>15:15</time><p>Hop off at Millbrae for <b>plane spotting at Bayfront Park</b> — a flat 15–20 min walk east down Millbrae Ave from your own station. Head-on view of the 28L/28R arrivals streaming in over the bay, and the <b>late-afternoon international widebody bank</b> is exactly your window. A350s inbound. Binoculars if you have them.</p></li>
-          <li><time>17:15</time><p>Stroll home — the park is basically the hotel's backyard, so this can become an every-evening ritual.</p></li>
-        </ul>
-        <div class="note">Day budget: $2 trains + $2.50 VTA + lunch + the BASED haul. Sunnyvale lunch alternative if Apple's café doesn't appeal: <b>Ramen Seas</b>, 173 S Murphy Ave — but note it closes at 14:00.</div>
-      </div>
-    </section>
-
-    <section class="day" data-leg="solo">
-      <div class="railbar"><span class="dot"></span></div>
-      <div class="card">
-        <header><span class="chip solo">Solo</span><h2><span class="dow">Wed</span> Aug 26 · Mountain View tech day</h2></header>
-        <ul class="sched">
-          <li><time>09:05</time><p>Southbound <b>#412 Limited</b> from Millbrae (~09:05) → Mountain View <b>09:39</b> (or the following Local, arriving 09:54).</p></li>
-          <li><time>10:00</time><p><b><a href="https://computerhistory.org">Computer History Museum</a></b>, 1401 N Shoreline (~2.5 mi from the station — scooter or a short bus hop). Only open today of your three solo days (Wed–Sun 10:00–17:00; ~$16.50 student with ID). Babbage engine to smartphones — the flight-computer and chip history hits different when you fly the A350.</p></li>
-          <li><time>13:00</time><p>Walk the corridor: <b>Google Visitor Experience</b> store (free) and the <b>Android lawn statues</b> at Charleston &amp; Huff.<small>That giant grey skeleton structure on the skyline toward the bay is <b>Hangar One</b> at Moffett — as close as a solo visitor gets; the airfield gate needs adult ID escort.</small></p></li>
-          <li><time>14:00</time><p>Late lunch on Castro St back by the station — <b>Doppio Zero</b> wood-fired pizza (order before 14:30).</p></li>
-          <li><time>15:36</time><p>Caltrain <b>#515 Express</b> from Mountain View, off at Millbrae ~16:05 (or the 16:36 → ~17:05). Evening free.</p></li>
-        </ul>
-        <div class="note">Day budget: ~$2 trains + $16.50 museum + lunch + scooter.</div>
-      </div>
-    </section>
-
-    <section class="day" data-leg="family">
-      <div class="railbar"><span class="dot"></span></div>
-      <div class="card">
-        <header><span class="chip family">Family</span><h2><span class="dow">Thu</span> Aug 27 · Painted Ladies, Twin Peaks, Lombard</h2></header>
-        <figure class="photo"><img src="%%IMG_painted%%" alt="The Painted Ladies Victorian houses at Alamo Square with the SF skyline behind"></figure>
-        <ul class="sched">
-          <li><time>10:00</time><p><b><a href="https://www.exploratorium.edu">Exploratorium</a></b>, Pier 15 (Thu 10:00–17:00; ~$40 adult / ~$30 youth, book online) — hundreds of hands-on physics/perception exhibits. Give it the morning.<small>Getting in: BART Millbrae → Embarcadero (~35 min), then a 12-min walk up the waterfront.</small></p></li>
-          <li><time>13:15</time><p>Lunch at the <b>Ferry Building</b> food hall, 10 min down the Embarcadero.</p></li>
-          <li><time>14:30</time><p>Waymo to <b>Alamo Square</b>: the <b>Painted Ladies</b> — the postcard row of Victorians with the skyline stacked behind them. Sit on the grass, get the shot.</p></li>
-          <li><time>15:30</time><p>Waymo up to <b>Twin Peaks</b> — the hill. ~280 m over the entire city: bridge, bay, Market Street arrowing straight at the Ferry Building. Fog's usually burned off by now; it is <i>always</i> windy up there, bring the windbreaker.</p></li>
-          <li><time>16:45</time><p>Finish classic: <b>Powell–Hyde cable car</b> over Russian Hill ($9 each), hop off at <b>Lombard Street</b>, walk the crooked block down, roll to the Wharf for sunset + dinner.<small>Legs left? Chinatown's Dragon Gate + Ross Alley fortune-cookie factory is 10 min off the cable-car line.</small></p></li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="day" data-leg="family">
-      <div class="railbar"><span class="dot"></span></div>
-      <div class="card">
-        <header><span class="chip family">Family</span><h2><span class="dow">Fri</span> Aug 28 · Giants of the Santa Cruz mountains</h2></header>
-        <figure class="photo"><img src="%%IMG_redwoods%%" alt="Old-growth redwood trunks along the grove trail at Henry Cowell"></figure>
-        <ul class="sched">
-          <li><time>07:45</time><p>Free hotel shuttle to <b>SFO's Rental Car Center</b> (open 24/7), grab the 1-day rental, roll south: I-280 → CA-85 → CA-17 over the summit to Felton. ~55 mi, ~1¼ h from Millbrae.</p></li>
-          <li><time>09:15</time><p><b><a href="https://www.parks.ca.gov/?page_id=546">Henry Cowell Redwoods</a></b>, Felton — day-use lot $10, no reservations. The 0.8-mi flat <b>Redwood Grove loop</b>: 277-ft, 1,500-year-old giants, and the Fremont Tree you can stand inside. No crowds at this hour.<small>These are proper old-growth monsters — a class above Muir Woods in both height and age.</small></p></li>
-          <li><time>11:00</time><p>Drive 15 min down to <b>Santa Cruz</b>: the beach, the wharf, and the Boardwalk's arcade + the 1924 <b>Giant Dipper</b> <i>if</i> rides are running Fridays (check beachboardwalk.com/hours — likely weekends-only by now; the beach itself never closes).</p></li>
-          <li><time>14:30</time><p>Cruise <b>West Cliff Drive</b> — watch the surfers at Steamer Lane from the cliff edge, sea lions below the lighthouse point.</p></li>
-          <li><time>16:00</time><p>Highway 17 north before the Friday crush builds — ~1.5 h back, park at the hotel.</p></li>
-        </ul>
-        <div class="note"><b>Car return:</b> Saturday ~08:00 at the SFO Rental Car Center (24/7 — no timing stress), shuttle back for breakfast. If riding the Giant Dipper is a must, its weekend operation is guaranteed — you could flip this day with Saturday's Angel Island, at the cost of the island's simple ferry logistics. Default is as written.</div>
-      </div>
-    </section>
-
-    <section class="day" data-leg="family">
-      <div class="railbar"><span class="dot"></span></div>
-      <div class="card">
-        <header><span class="chip family">Family</span><h2><span class="dow">Sat</span> Aug 29 · Angel Island bike raid</h2></header>
-        <figure class="photo"><img src="%%IMG_angel%%" alt="The ferry dock at Ayala Cove, Angel Island"></figure>
-        <ul class="sched">
-          <li><time>08:00</time><p>Return the rental at SFO, shuttle back, then BART Millbrae → Embarcadero (~35 min) — Ferry Building by ~09:30.</p></li>
-          <li><time>09:45</time><p>Gates B/C — <a href="https://www.goldengate.org/ferry/angel-island-ferry/">Golden Gate Ferry</a> to <b>Angel Island</b>, departs 10:15, lands 10:45. Adults $10 tap / youth $8 (state-park entry included). <b>Buy the round trip — there are no ticket sales on the island.</b></p></li>
-          <li><time>11:00</time><p>Rent mountain bikes at the cove (<a href="https://angelisland.com">Angel Island Company</a>: $16/h, under-18 fine with helmet + parent present; island e-bikes are 18+ so it's pedal power today) and lap the <b>Perimeter Road</b> — 5.5 mi, hilly, with 360° views of the bridge, the city, and Tiburon. ~2 h with photo stops.</p></li>
-          <li><time>13:30</time><p>Return the bikes (due back 15:30 anyway), picnic/café at Ayala Cove, feet in the water.</p></li>
-          <li><time>15:20</time><p>Ferry home (15:20 → 15:50), or stretch it to the last boat at 16:50 → 17:45. Evening free — last proper SF night.</p></li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="day" data-leg="family">
-      <div class="railbar"><span class="dot"></span></div>
-      <div class="card">
-        <header><span class="chip family">Family</span><h2><span class="dow">Sun</span> Aug 30 · Golden Gate Park → wheels up</h2></header>
-        <figure class="photo"><img src="%%IMG_teagarden%%" alt="The pagoda in the Japanese Tea Garden, Golden Gate Park"></figure>
-        <ul class="sched">
-          <li><time>10:00</time><p>Check out, leave bags with the front desk. Waymo straight to Golden Gate Park (~30 min), or BART + the N train.</p></li>
-          <li><time>11:00</time><p><b><a href="https://www.calacademy.org">California Academy of Sciences</a></b> at opening (Sun 11:00–17:00) with your pre-booked tickets — rainforest dome, Steinhart Aquarium, penguins, the living roof. Give it ~2.5 h.</p></li>
-          <li><time>13:30</time><p>Free show: the <b>Golden Gate Park Band</b> at the Bandshell right outside (13:00–14:30). Food-truck lunch on the Music Concourse. Then one pick: the free <b>Hamon Tower</b> view atop the de Young, the <b><a href="https://www.japaneseteagardensf.com">Japanese Tea Garden</a></b> (~$15–18 / $7 youth), or a <b>Blue Heron Lake</b> pedal boat (~$32.50/h).</p></li>
-          <li><time>15:15</time><p>Waymo back to Millbrae, grab bags — the hotel's free SFO shuttle does the last hop.</p></li>
-          <li><time>16:30</time><p>Arriving early is the plan: <b><a href="https://www.flysfo.com">SkyTerrace</a></b>, Terminal 2 — SFO's free outdoor observation deck, landside, open Sundays to 18:00. Watch the heavies you'll be joining. (Earlier arrival? The free <b><a href="https://www.sfomuseum.org">SFO Aviation Museum</a></b> in the International Terminal, a recreated 1937 terminal, runs to 16:30.)</p></li>
-          <li><time>17:45</time><p>AirTrain to the International Terminal, check in. Wheels up 20:00 — and this time you're in the back, judging the crew's flare from row 40.</p></li>
-        </ul>
-      </div>
-    </section>
-
+<header class="hero">
+  <div class="hero-text">
+    <h1 class="display">FOGUST <span>GRAND TOUR</span></h1>
+    <p>SAN FRANCISCO &amp; TAHOE · AUG 19 – 30, 2026 · JULIAN + DAD</p>
   </div>
+  <div class="sun"></div>
+  <svg class="bridge" viewBox="0 0 1200 200" preserveAspectRatio="none" aria-hidden="true">
+    <rect x="0" y="150" width="1200" height="50" fill="#0c1028"/>
+    <path d="M0 150 L1200 150" stroke="#0c1028" stroke-width="10"/>
+    <path d="M0 40 Q300 150 600 40 Q900 150 1200 40" stroke="#0c1028" stroke-width="8" fill="none"/>
+    <g fill="#0c1028">
+      <rect x="290" y="20" width="14" height="140"/><rect x="316" y="20" width="14" height="140"/>
+      <rect x="284" y="34" width="52" height="10"/><rect x="284" y="70" width="52" height="10"/><rect x="284" y="110" width="52" height="10"/>
+      <rect x="880" y="20" width="14" height="140"/><rect x="906" y="20" width="14" height="140"/>
+      <rect x="874" y="34" width="52" height="10"/><rect x="874" y="70" width="52" height="10"/><rect x="874" y="110" width="52" height="10"/>
+    </g>
+    <g stroke="#0c1028" stroke-width="3">
+      <line x1="450" y1="97" x2="450" y2="150"/><line x1="530" y1="63" x2="530" y2="150"/>
+      <line x1="670" y1="63" x2="670" y2="150"/><line x1="750" y1="97" x2="750" y2="150"/>
+      <line x1="90" y1="112" x2="90" y2="150"/><line x1="180" y1="132" x2="180" y2="150"/>
+      <line x1="1020" y1="132" x2="1020" y2="150"/><line x1="1110" y1="112" x2="1110" y2="150"/>
+    </g>
+  </svg>
+  <svg class="palm p1" viewBox="0 0 100 160" aria-hidden="true">
+    <path d="M50 160 C48 120 46 90 52 60" stroke="#0c1028" stroke-width="7" fill="none"/>
+    <g fill="#0c1028">
+      <path d="M52 60 C30 48 12 50 2 62 C20 62 38 60 52 66Z"/>
+      <path d="M52 60 C70 46 88 48 98 60 C80 60 64 60 52 66Z"/>
+      <path d="M52 60 C40 40 24 32 8 34 C24 42 40 52 50 62Z"/>
+      <path d="M52 60 C62 38 78 30 94 32 C78 40 62 52 53 62Z"/>
+      <path d="M52 60 C50 38 42 24 30 18 C40 32 48 48 51 62Z"/>
+      <path d="M52 60 C56 38 64 24 76 18 C66 32 57 48 53 62Z"/>
+      <circle cx="49" cy="63" r="4"/><circle cx="56" cy="65" r="4"/>
+    </g>
+  </svg>
+  <svg class="palm p2" viewBox="0 0 100 160" aria-hidden="true">
+    <path d="M50 160 C54 120 56 90 48 60" stroke="#0c1028" stroke-width="7" fill="none"/>
+    <g fill="#0c1028">
+      <path d="M48 60 C26 48 10 50 0 62 C18 62 36 60 48 66Z"/>
+      <path d="M48 60 C66 46 86 48 96 60 C78 60 62 60 48 66Z"/>
+      <path d="M48 60 C36 40 20 32 6 34 C22 42 38 52 47 62Z"/>
+      <path d="M48 60 C58 38 74 30 90 32 C74 40 58 52 49 62Z"/>
+      <path d="M48 60 C46 38 38 24 26 18 C36 32 45 48 47 62Z"/>
+      <path d="M48 60 C52 38 60 24 72 18 C62 32 53 48 49 62Z"/>
+      <circle cx="45" cy="63" r="4"/><circle cx="52" cy="65" r="4"/>
+    </g>
+  </svg>
+  <svg class="palm p3" viewBox="0 0 100 160" aria-hidden="true">
+    <path d="M50 160 C48 124 47 96 52 66" stroke="#0c1028" stroke-width="6" fill="none"/>
+    <g fill="#0c1028">
+      <path d="M52 66 C32 56 16 58 6 68 C24 68 40 66 52 72Z"/>
+      <path d="M52 66 C70 54 86 56 96 66 C80 66 64 66 52 72Z"/>
+      <path d="M52 66 C42 48 28 40 14 42 C28 50 44 58 51 68Z"/>
+      <path d="M52 66 C60 46 74 38 88 40 C74 48 60 58 53 68Z"/>
+    </g>
+  </svg>
+</header>
 
-  <section class="cheats">
-    <h2>The bench — swaps &amp; spares</h2>
-    <div class="tablewrap">
-      <table>
-        <thead><tr><th>Option</th><th>The pitch</th></tr></thead>
-        <tbody>
-          <tr><td><b>Hiller Aviation Museum</b></td><td>601 Skyway Rd, San Carlos — walk-through 747 nose, real 737-200 cockpit, $14 youth, daily 10–17, a 1-mi walk from San Carlos Caltrain. The sims and drone arena run weekends only, so as a solo-weekday stop it's static-only — slot it in if a solo day runs light. (And if the flying itch ever outbids the budget: the demo flight next door at San Carlos Flight Center is $350, age 12+, 650-946-1700 — some schools quote shorter ~30-min intro flights for roughly half that; worth asking.)</td></tr>
-          <tr><td><b>Muir Woods, car-free</b></td><td>The famous (smaller) redwoods: Larkspur ferry + reserved Route 66F shuttle, Fri–Sun only ($4 RT, under-16 free; entry $15/adult). Backup if the Santa Cruz day changes.</td></tr>
-          <tr><td><b>Waymo neighborhoods hop</b></td><td>Painted Ladies → Haight St → Twin Peaks lookout → Mission murals + burrito. Slots into any spare family half-day.</td></tr>
-          <tr><td><b>Moffett Field Museum</b></td><td>Wed–Sat 10–15, at the foot of Hangar One ($10 / $5). Federal gate: adults need Real ID and a solo minor shouldn't attempt it — adult-accompanied only, call ahead. NASA Ames' visitor center itself moved to Chabot, Oakland.</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
+<nav class="daybar" id="daybar" aria-label="Trip days"></nav>
 
-  <section class="cheats">
-    <h2>Basecamps</h2>
-    <div class="tablewrap">
-      <table>
-        <thead><tr><th>Nights</th><th>Stay</th><th>The deal</th></tr></thead>
-        <tbody>
-          <tr>
-            <td class="mono">Aug 19–20<br>(2 nights)</td>
-            <td><b>Truckee Donner Lodge</b><br>10527 Cold Stream Rd, Truckee<br><span class="mono">Booking 8.3</span></td>
-            <td>2-queen rooms <b>$132–149/night</b> — right in the $100–150 target. Free parking, free hot breakfast 6:30–9:30 (eggs, bacon, pancake machine), first exit off I-80 as you arrive, ~20 min to Northstar. Same-money alt with a higher score: <b>Firelite Lodge</b>, Tahoe Vista (Booking <b>8.6</b>, ~$133, lakeside, ~15 min to Northstar via CA-267) — pick it if waking up next to Lake Tahoe sounds better than waking up next to the highway.</td>
-          </tr>
-          <tr>
-            <td class="mono">Aug 21–29<br>(9 nights)</td>
-            <td><b><a href="https://www.booking.com/hotel/us/san-francisco-airport-south-travelodge.html">The Dylan Hotel at SFO</a></b><br>Millbrae<br><span class="mono">Booking 8.5</span></td>
-            <td>~$150–210/night + tax — roughly half what the city wants this week, because the <b>Pokémon World Championships take over Moscone Aug 28–30</b> and surge-price SoMa (that's the $600 Hyatt quote). The Dylan: <b>3-min walk to Millbrae Caltrain + BART</b> — ~20 min into the city, ~30 south to Palo Alto, so the solo days get <i>easier</i>; hot breakfast included; free 24-h SFO shuttle for the departure and the Friday car rental; and it sits under the SFO approach, heavies overhead all day — in this family, a feature. Honest trade-off: it's a converted motor lodge, and city evenings run on the train timetable. Alternates: <b><a href="https://www.booking.com/hotel/us/bay-landing.html">Bay Landing Hotel</a></b>, Burlingame (Booking 8.4, ~$170–210, rooms literally facing the runways across the water; 20-min walk to Caltrain) · in-the-city splurge: <b><a href="https://www.booking.com/hotel/us/luma-san-francisco.html">LUMA</a></b>, Mission Bay (Booking <b>9.1</b>, ~$260–330 across the Pokémon weekend, 8-min walk to 4th &amp; King).</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="fine-under">Rates are Aug 18 snapshots — treat as ±20% and book refundable on Booking.com today. <b>Car plan:</b> SFO pickup Wednesday → drop at the Wharf offices Saturday Aug 22 morning right before the bike loop (check the one-way fee) → separate 1-day SFO rental for the Santa Cruz Friday. Zero city-garage bills; the Dylan parks you at the hotel (confirm free parking at booking).</p>
-  </section>
+<main class="wrap"><div id="panel"></div>
+<footer>
+  <p>Prices &amp; schedules verified Aug 18, 2026 against official sources (goldengate.org 2026 ferry card, Caltrain Jan-2026 timetable, calacademy.org, parks.ca.gov, uss-hornet.org, Booking.com, Northstar published hours). Ranges mean the operator uses date-based pricing — the link shows the live number. Photos: Wikimedia Commons (CC) — Cary Bass, inkknife_2000, ShakataGaNai, F. Schulenburg, D. L. Lu, King of Hearts, J. Jönsson, R. N. Horne, Daderot.</p>
+</footer>
+</main>
 
-  <section class="cheats">
-    <h2>Cheat sheet</h2>
+<script>
+const M = q => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q);
+const BADGES = {book:["b-book","Book ahead"],walkup:["b-walkup","Walk-up"],free:["b-free","Free"],pick:["b-pick","Pick one"],ifopen:["b-ifopen","If open"]};
 
-    <div class="tablewrap">
-      <table>
-        <thead><tr><th>Thing</th><th>Numbers that matter</th></tr></thead>
-        <tbody>
-          <tr><td><b>Northstar lifts</b></td><td class="mono">Thu 10–17</td></tr>
-          <tr><td><b>Ferry, Tiburon → SF</b></td><td class="mono">Sat/Sun: 11:50 · 12:55 · 14:45 · 17:15 (last)<br>Mon–Fri: 6:50 · 8:10 · 9:35 · 11:50 · 13:15 · 16:30 (last)</td></tr>
-          <tr><td><b>Ferry, SF ↔ Angel Island (Sat)</b></td><td class="mono">Out: 10:15 · 14:05 · 16:05 — Back: 10:55 · 15:20 · 16:50 (last)</td></tr>
-          <tr><td><b>Caltrain, solo-day keys</b></td><td class="mono">South AM (SF dep): 08:48 Ltd · 08:55 Loc · 09:25 Loc · 09:55 Loc<br>Home: PA 16:43 Exp / 17:10 Ltd · Svale 16:32 Exp / 16:57 Ltd · MV 15:36 Exp / 16:36 Exp<br>(southbound trains pass Millbrae ~17–20 min after SF)</td></tr>
-          <tr><td><b>Youth fares</b></td><td>Caltrain 18-under: $1 a ride / $2 day pass (machines). Muni: free 18-under, visitors included (cable cars $9 flat). VTA bus: $1.25 youth. Ferries: $7–8 youth.</td></tr>
-          <tr><td><b>Weather</b></td><td>SF: highs 65–68°F, foggy mornings, bridge deck cold + windy — windbreaker over layers. Truckee: warmer, bone-dry, fierce high-altitude sun — sunscreen everywhere.</td></tr>
-          <tr><td><b>Key addresses</b></td><td>Blazing Saddles: 2715 Hyde St · USS Hornet: 707 W Hornet Ave, Alameda · Exploratorium: Pier 15 · Target (BASED): 298 W McKinley Ave, Sunnyvale · Apple Park VC: 10600 N Tantau Ave, Cupertino · CHM: 1401 N Shoreline Blvd, Mountain View · Spotting: Bayfront Park, Millbrae Ave · Henry Cowell Redwoods: 101 N Big Trees Park Rd, Felton</td></tr>
-          <tr><td><b>Phones</b></td><td>Northstar: 1-800-842-8062 · Truckee Donner Lodge: 530-582-9999 · Blazing Saddles: 415-202-8888 · Blue &amp; Gold: 415-705-8200 · Marina Bike Shop: 415-292-3900</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
+const DAYS = [
+ {id:"todo",util:"TO BOOK",title:"Book these now",
+  note:"<b>Why the rush:</b> the Pokémon World Championships hit Moscone Aug 28–30 and are surge-pricing SF hotels, and the enduro race fills Truckee your Tahoe nights. Book refundable today.",
+  acts:[
+   {t:"HOTEL",title:"Truckee Donner Lodge — Wed 19 + Thu 20",badge:"book",d:"Booking 8.3 · free hot breakfast + parking · first exit off I-80 · 20 min to Northstar.",loc:["10527 Cold Stream Rd, Truckee","10527 Cold Stream Rd, Truckee CA"],price:"$132–149 / night",link:["Book on Booking.com","https://www.booking.com/hotel/us/truckee-donner-lodge.html"]},
+   {t:"HOTEL",title:"The Dylan Hotel at SFO — Fri 21 → Sun 30 (9 nights)",badge:"book",d:"Booking 8.5 · hot breakfast · 3-min walk to Millbrae Caltrain + BART · free SFO shuttle · A350s overhead all day.",loc:["Millbrae (at Millbrae station)","The Dylan Hotel at SFO Millbrae"],price:"$150–210 / night",link:["Book on Booking.com","https://www.booking.com/hotel/us/san-francisco-airport-south-travelodge.html"]},
+   {t:"BIKE",title:"Northstar lift ticket + downhill bike rental — Thu 20",badge:"book",d:"Book online: rentals ~20% cheaper and the youth fleet is small on race week. Full-face helmet + gloves included. Youth price: call 1-800-842-8062.",loc:["Northstar California, Truckee","Northstar California Resort"],price:"~$99 ticket + $100–150 rental",link:["northstarcalifornia.com","https://www.northstarcalifornia.com"]},
+   {t:"BIKE",title:"Blazing Saddles E-Blazer throttle e-bikes — Sat 22",badge:"book",d:"Reserve 2 bikes online AND call 415-202-8888 with the one question that decides the route: is the E-Blazer under 50 lb? (That is the ferry limit.)",loc:["2715 Hyde St, San Francisco","2715 Hyde St San Francisco"],price:"$64 / bike online ($80 walk-in)",link:["Reserve e-bikes","https://www.blazingsaddles.com/san-francisco/bikes-and-rates/electric-bikes"]},
+   {t:"CAR",title:"Tahoe rental car — SFO Wed 19 → Wharf drop Sat 22",badge:"book",d:"Pick up at SFO after landing, drop at Hertz/Avis 500 Beach St or Enterprise 350 Beach St on Saturday morning. Check the one-way fee.",loc:["SFO Rental Car Center","SFO Rental Car Center"],price:"~$60–90 / day",link:["Compare on Kayak","https://www.kayak.com/cars"]},
+   {t:"CAR",title:"Santa Cruz 1-day rental — Fri 28",badge:"book",d:"From the SFO Rental Car Center (free hotel shuttle, open 24/7 — return Sat 08:00, zero timing stress).",loc:["SFO Rental Car Center","SFO Rental Car Center"],price:"~$60–100 all-in",link:["Compare on Kayak","https://www.kayak.com/cars"]},
+   {t:"TICKETS",title:"California Academy of Sciences — Sun 30",badge:"book",d:"Date-specific tickets; buy the 11:00 opening slot for the flight-day plan to work.",loc:["55 Music Concourse Dr, San Francisco","California Academy of Sciences"],price:"$49–55 adult · $45–49 youth",link:["calacademy.org","https://www.calacademy.org"]},
+   {t:"FARES",title:"Youth Clipper card (or $7 paper youth ferry ticket)",badge:"book",d:"Needed before Saturday — Tiburon has no ticket machine. Sort it at SF Ferry Building machines on Friday afternoon, or tap a contactless card and pay adult fare.",loc:["SF Ferry Building","San Francisco Ferry Building"],price:"$7 youth ferry · $1 youth Caltrain",link:["clippercard.com","https://www.clippercard.com"]}
+  ]},
+ {id:19,dow:"WED",leg:"tahoe",title:"Land & launch east",
+  acts:[
+   {t:"16:00",title:"Land at SFO, grab the rental car",badge:"walkup",d:"Immigration + rental pickup — realistically rolling by 17:30.",loc:["SFO Rental Car Center","SFO Rental Car Center"],price:"car ~$60–90/day"},
+   {t:"17:30",title:"I-80 East to Truckee",badge:"free",d:"195 mi, ~3.5 h clean; evening commute drags the stretch to Fairfield. Night roadwork over Donner — check QuickMap at the dinner stop.",loc:["Truckee, CA","Truckee CA"],price:"$0",link:["QuickMap road status","https://quickmap.dot.ca.gov"]},
+   {t:"19:30",title:"Dinner stop: In-N-Out, Auburn",badge:"walkup",d:"The classic I-80 road-trip call, ~2 h in. Double-double, animal fries.",loc:["In-N-Out Burger, Auburn CA","In-N-Out Burger Auburn CA"],price:"~$10 / head"},
+   {t:"21:30",title:"Check in: Truckee Donner Lodge",badge:"book",d:"Straight to bed — lifts at 10:00 tomorrow.",loc:["10527 Cold Stream Rd, Truckee","10527 Cold Stream Rd Truckee CA"],price:"$132–149 / night",link:["Booking.com","https://www.booking.com/hotel/us/truckee-donner-lodge.html"]}
+  ],
+  alts:[
+   {t:"PLAN B",title:"Everyone fading? Stop short",badge:"walkup",d:"Sacramento (~2 h) or Auburn (~2.5 h) motel, finish the last 1–1.5 h in the morning — you still beat the lifts.",loc:["Auburn, CA","Auburn CA"],price:"~$100–140"}
+  ]},
+ {id:20,dow:"THU",leg:"tahoe",title:"Northstar — the full send",img:"%%IMG_tahoe%%",
+  note:"<b>Flow day:</b> warm up on the green/blue machine-groomed lines, then session <b>Livewire</b> — the famous flow/jump trail, rebuilt for 2026: berms, tables, rollers top to bottom. Thursday is the quietest day before the race crowd arrives.",
+  acts:[
+   {t:"08:30",title:"Hot breakfast at the lodge",badge:"free",d:"Runs 6:30–9:30 — eggs, bacon, pancake machine.",loc:["Truckee Donner Lodge","10527 Cold Stream Rd Truckee CA"],price:"included"},
+   {t:"09:15",title:"Drive to Northstar, pick up bikes + armor",badge:"book",d:"I-80 E → exit 188B → CA-267, ~20 min. Summer parking free, no reservation.",loc:["Northstar California Resort","Northstar California Resort Truckee"],price:"ticket ~$99 + rental $100–150",link:["Tickets & rentals","https://www.northstarcalifornia.com"]},
+   {t:"10:00",title:"Lifts spin 10:00–17:00 — first chair to last",badge:"walkup",d:"Big Springs Gondola → Vista Express → Tahoe Zephyr. Full-face helmet + gloves come with the rental.",loc:["Northstar Bike Park","Northstar California Resort Truckee"],price:"—"},
+   {t:"17:00",title:"Pizza in downtown Truckee, collapse",badge:"walkup",d:"Historic Commercial Row has all the food.",loc:["Downtown Truckee","Commercial Row Truckee CA"],price:"~$20 / head"}
+  ],
+  alts:[
+   {t:"OPTION",title:"Bike 101 package (first-timer route)",badge:"book",d:"Ticket + gear + lesson bundle — the sane way into lift-served downhill. Confirm price on the phone.",loc:["Northstar California Resort","Northstar California Resort Truckee"],price:"call 1-800-842-8062",link:["northstarcalifornia.com","https://www.northstarcalifornia.com"]},
+   {t:"OPTION",title:"Legs died early? Donner Lake swim",badge:"free",d:"West End Beach — actual alpine water, 10 min from the lodge.",loc:["West End Beach, Donner Lake","West End Beach Donner Lake Truckee"],price:"small day fee"}
+  ]},
+ {id:21,dow:"FRI",leg:"tahoe",title:"Head back west",
+  acts:[
+   {t:"08:30",title:"Breakfast, load the car, optional Donner Lake toe-dip",badge:"free",d:"20-minute detour before leaving the mountains.",loc:["Donner Lake, Truckee","Donner Lake Truckee CA"],price:"$0"},
+   {t:"09:30",title:"I-80 West — against the incoming Tahoe traffic",badge:"free",d:"~3.5 h. Check QuickMap before rolling.",loc:["I-80 West","Interstate 80 Sacramento CA"],price:"$0",link:["QuickMap","https://quickmap.dot.ca.gov"]},
+   {t:"13:30",title:"Check in: The Dylan Hotel at SFO, Millbrae",badge:"book",d:"3 min from Millbrae station, planes on final approach overhead. Park the car at the hotel (confirm free at booking).",loc:["The Dylan Hotel, Millbrae","The Dylan Hotel at SFO Millbrae"],price:"$150–210 / night × 9",link:["Booking.com","https://www.booking.com/hotel/us/san-francisco-airport-south-travelodge.html"]},
+   {t:"15:00",title:"BART to Embarcadero: Ferry Building + Saturday's ferry tickets",badge:"walkup",d:"Food-hall snack run, and buy the $7 youth ferry ticket / sort Youth Clipper at the machines. Early night — big ride tomorrow.",loc:["SF Ferry Building","San Francisco Ferry Building"],price:"BART ~$5.60 adult / ~$2 youth",link:["Ferry schedule","https://www.goldengate.org/ferry/"]}
+  ],
+  alts:[
+   {t:"BONUS",title:"First plane-spotting session, Bayfront Park",badge:"free",d:"15–20 min walk from the hotel — 28L/28R arrivals head-on over the bay. Preview of Tuesday.",loc:["Bayfront Park, Millbrae","Bayfront Park Millbrae Ave Millbrae CA"],price:"$0",link:["Live traffic","https://www.flightradar24.com"]}
+  ]},
+ {id:22,dow:"SAT",leg:"family",title:"The Tiburon loop",img:"%%IMG_bridge%%",
+  note:"<b>Ferry rules:</b> e-bikes must be under 50 lb, power off on board, bike space first-come (Tiburon boats carry 30). Adults tap contactless ($8.50); the youth $7 fare needs Friday's paper ticket or Youth Clipper. Miss the 17:15? Ride 7 flat miles back to Sausalito for the 18:55.",
+  acts:[
+   {t:"08:15",title:"Drive in, hand back the Tahoe car at the Wharf",badge:"walkup",d:"Hertz / Avis 500 Beach St or Enterprise 350 Beach St, open ~08:00 — three blocks from the bike shop. Car-free from here.",loc:["500 Beach St, San Francisco","500 Beach St San Francisco"],price:"one-way fee applies"},
+   {t:"09:00",title:"Pick up the E-Blazer throttle e-bikes",badge:"book",d:"Pedal-assist + power-on-demand throttle. Legal at 13 (Class 2, no CA minimum age), riders 5'0\"+, parent signs. Helmet + lock included.",loc:["Blazing Saddles, 2715 Hyde St","2715 Hyde St San Francisco"],price:"$64 / bike (online)",link:["Reserve","https://www.blazingsaddles.com/san-francisco/bikes-and-rates/electric-bikes"]},
+   {t:"10:00",title:"Ride: Wharf → Golden Gate Bridge → Sausalito → Tiburon",badge:"free",d:"~18 mi, ~3 h riding. Saturday perk: bikes get the west sidewalk to themselves (15 mph, 5 mph at towers). Lunch in Sausalito.",loc:["Golden Gate Bridge","Golden Gate Bridge Welcome Center"],price:"$0"},
+   {t:"14:15",title:"Tiburon dock 30 min early → ferry home",badge:"walkup",d:"Sailings 14:45 (scenic via Angel Island) or 17:15 last boat. Bikes ride free.",loc:["Tiburon Ferry Terminal","Tiburon Ferry Terminal"],price:"$8.50 adult · $7 youth",link:["Schedule","https://www.goldengate.org/ferry/"]},
+   {t:"16:00",title:"Return bikes, Wharf dinner + Musée Mécanique",badge:"free",d:"1.5 flat miles up the Embarcadero to the shop, then the antique arcade — free entry, bring quarters.",loc:["Musée Mécanique, Pier 45","Musee Mecanique Pier 45 San Francisco"],price:"quarters"}
+  ],
+  alts:[
+   {t:"PLAN B",title:"E-Blazer over 50 lb? Standard pedal-assist e-bikes",badge:"walkup",d:"Same loop, same shop, ferry-legal for sure.",loc:["Blazing Saddles","2715 Hyde St San Francisco"],price:"$64–80 / bike"},
+   {t:"PLAN C",title:"Keep the throttles, turn around at Sausalito",badge:"walkup",d:"Blue & Gold Fleet ferry from Sausalito to Pier 41 publishes no e-bike weight limit — confirm on 415-705-8200. Lands 5 min from the shop.",loc:["Sausalito Ferry Landing","Sausalito Ferry Landing"],price:"~$14",link:["blueandgoldfleet.com","https://www.blueandgoldfleet.com"]}
+  ]},
+ {id:23,dow:"SUN",leg:"family",title:"Carrier day: USS Hornet",img:"%%IMG_hornet%%",
+  acts:[
+   {t:"08:35",title:"BART Millbrae → Embarcadero",badge:"walkup",d:"~35 min straight to the Ferry Building.",loc:["Millbrae BART","Millbrae Station"],price:"~$5.60 / ~$2 youth"},
+   {t:"09:40",title:"SF Bay Ferry to Alameda Main Street",badge:"walkup",d:"Oakland & Alameda route, roughly hourly — the right way to approach a warship is across the whole bay.",loc:["SF Ferry Building docks","San Francisco Ferry Building"],price:"$5.10 adult · $2.50 youth",link:["sanfranciscobayferry.com","https://sanfranciscobayferry.com"]},
+   {t:"10:45",title:"Bus 96 or scooters, ~2 mi to the pier",badge:"walkup",d:"The flight deck is visible most of the way.",loc:["Alameda Main St Ferry Terminal","Main Street Ferry Terminal Alameda"],price:"~$2"},
+   {t:"11:00",title:"USS Hornet Sea, Air & Space Museum",badge:"walkup",d:"Fighters on the flight + hangar decks, the island, catapult gear — and the Apollo 11 recovery exhibits: this exact ship pulled the crew from the Pacific. Docent tour +$12 gets you into engineering.",loc:["707 W Hornet Ave, Alameda","USS Hornet Museum Alameda"],price:"$25 adult · $12 youth",link:["uss-hornet.org","https://uss-hornet.org"]},
+   {t:"15:00",title:"Ferry + BART home",badge:"walkup",d:"Easy evening — solo days start tomorrow.",loc:["Alameda Main St Terminal","Main Street Ferry Terminal Alameda"],price:"as above"}
+  ],
+  alts:[
+   {t:"SWAP",title:"Hiller Aviation Museum (weekend = sims running)",badge:"walkup",d:"Walk-through 747 nose, real 737-200 cockpit, $10 full-motion Redbird sim, drone arena. 1-mi walk from San Carlos Caltrain.",loc:["601 Skyway Rd, San Carlos","Hiller Aviation Museum San Carlos"],price:"$22 adult · $14 youth · sims $5–10",link:["hiller.org","https://www.hiller.org"]},
+   {t:"SWAP",title:"Exploratorium (Sun 12:00–17:00)",badge:"book",d:"If you would rather bank the Hornet for Saturday 29.",loc:["Pier 15, San Francisco","Exploratorium Pier 15 San Francisco"],price:"$39.95 adult · $29.95 youth",link:["exploratorium.edu","https://www.exploratorium.edu"]}
+  ]},
+ {id:24,dow:"MON",leg:"solo",title:"Solo: Stanford",img:"%%IMG_stanford%%",
+  note:"<b>Solo-day kit:</b> charged phone + power bank, live location on, proof of age for youth fares. Trains every 30 min — a missed one is never a crisis. Muni is free under 18, Caltrain is $2 for the whole day.",
+  acts:[
+   {t:"09:45",title:"Caltrain south from Millbrae (3 min from the hotel door)",badge:"walkup",d:"The 09:25 SF Local (#118) passes Millbrae ~09:45 → Palo Alto 10:14. Buy the youth day pass at the machine.",loc:["Millbrae Caltrain","Millbrae Station"],price:"$2 youth day pass",link:["caltrain.com","https://www.caltrain.com"]},
+   {t:"10:30",title:"Free Marguerite shuttle into campus → self-guided tour",badge:"free",d:"Main Quad, Memorial Church, the Oval. Hoover Tower is closed for renovation — the Quad is the show anyway.",loc:["Stanford Visitor Center, 295 Galvez St","295 Galvez St Stanford"],price:"$0",link:["visit.stanford.edu","https://visit.stanford.edu"]},
+   {t:"12:30",title:"Lunch: Gott's Roadside, Town & Country",badge:"walkup",d:"Burgers + shakes directly across from the station.",loc:["855 El Camino Real, Palo Alto","Gott's Roadside Palo Alto"],price:"~$15–25"},
+   {t:"13:30",title:"Cantor Arts Center — only open today of your solo days",badge:"free",d:"Free entry, the Rodin bronze garden is the famous bit. 11:00–18:00.",loc:["328 Lomita Dr, Stanford","Cantor Arts Center Stanford"],price:"$0",link:["museum.stanford.edu","https://museum.stanford.edu"]},
+   {t:"15:00",title:"Stanford Shopping Center",badge:"walkup",d:"Open-air, 140+ stores, right by the station.",loc:["Stanford Shopping Center","Stanford Shopping Center Palo Alto"],price:"—"},
+   {t:"17:10",title:"#421 Limited home — Millbrae ~17:35",badge:"walkup",d:"Or the 16:43 Express if you finish early.",loc:["Palo Alto Caltrain","Palo Alto Station"],price:"covered by day pass"}
+  ],
+  alts:[
+   {t:"SWAP",title:"USS Hornet solo (open Mondays)",badge:"walkup",d:"Weekday-only Seaplane ferry: Ferry Building → Seaplane Lagoon 20 min, then a 10-min walk.",loc:["USS Hornet, Alameda","USS Hornet Museum Alameda"],price:"$12 youth + $2.50 ferry",link:["uss-hornet.org","https://uss-hornet.org"]}
+  ]},
+ {id:25,dow:"TUE",leg:"solo",title:"Solo: BASED run, Apple Park, heavies",img:"%%IMG_applepark%%",
+  acts:[
+   {t:"09:05",title:"Southbound #412 Limited from Millbrae",badge:"walkup",d:"Left SF 08:48, hits Sunnyvale 09:43.",loc:["Millbrae Caltrain","Millbrae Station"],price:"$2 youth day pass"},
+   {t:"09:50",title:"Target Sunnyvale — the BASED Bodyworks shelf",badge:"walkup",d:"Men's grooming / hair-care aisle, two blocks from the station. Check stock in the Target app the night before.",loc:["298 W McKinley Ave, Sunnyvale","Target 298 W McKinley Ave Sunnyvale"],price:"the haul is on you",link:["Store page","https://www.target.com/sl/sunnyvale/2584"]},
+   {t:"11:15",title:"VTA bus 53 → Apple Park Visitor Center",badge:"free",d:"~20 min down Homestead, off at Tantau, 10-min walk. Roof terrace over the ring, café lunch, Park-exclusive merch, Vision Pro demos.",loc:["10600 N Tantau Ave, Cupertino","Apple Park Visitor Center"],price:"free entry · bus $1.25 youth",link:["Visitor Center","https://www.apple.com/retail/appleparkvisitorcenter/"]},
+   {t:"14:00",title:"Bus + Caltrain back north, hop off at Millbrae",badge:"walkup",d:"~40 min ride home.",loc:["Sunnyvale Caltrain","Sunnyvale Station"],price:"covered"},
+   {t:"15:15",title:"Plane spotting: Bayfront Park — the widebody bank",badge:"free",d:"Flat 15–20 min walk down Millbrae Ave. Head-on 28L/28R arrivals over the bay; the late-afternoon international heavies are exactly your window. A350s inbound.",loc:["Bayfront Park, Millbrae","Bayfront Park Millbrae Ave Millbrae CA"],price:"$0",link:["Flightradar24","https://www.flightradar24.com"]}
+  ],
+  alts:[
+   {t:"BACKUP",title:"Target Mountain View (if Sunnyvale is out of BASED)",badge:"walkup",d:"555 Showers Dr — short walk from San Antonio station, one stop north.",loc:["555 Showers Dr, Mountain View","Target 555 Showers Dr Mountain View"],price:"—",link:["Store page","https://www.target.com/sl/mountain-view/322"]},
+   {t:"LUNCH",title:"Ramen Seas, Murphy Ave",badge:"walkup",d:"3 min from Sunnyvale station — but it closes at 14:00.",loc:["173 S Murphy Ave, Sunnyvale","Ramen Seas Sunnyvale"],price:"~$16–20"}
+  ]},
+ {id:26,dow:"WED",leg:"solo",title:"Solo: Mountain View tech day",
+  acts:[
+   {t:"09:05",title:"Southbound #412 Limited from Millbrae",badge:"walkup",d:"Mountain View 09:39; short bus/scooter hop up Shoreline.",loc:["Millbrae Caltrain","Millbrae Station"],price:"$2 youth day pass"},
+   {t:"10:00",title:"Computer History Museum — only open today of your solo days",badge:"walkup",d:"Babbage engine to smartphones. The flight-computer history hits different when you fly the A350.",loc:["1401 N Shoreline Blvd, Mountain View","Computer History Museum"],price:"$21.50 adult · $16.50 student w/ ID",link:["computerhistory.org","https://computerhistory.org"]},
+   {t:"13:00",title:"Google Visitor Experience + Android lawn statues",badge:"free",d:"Free store/café, then the classic statue photo at Charleston & Huff. The giant grey skeleton on the horizon is Hangar One at Moffett — as close as a solo visitor gets.",loc:["Charleston Rd & Huff Ave, Mountain View","Android lawn statues Mountain View"],price:"$0"},
+   {t:"14:00",title:"Late lunch: Doppio Zero, Castro St",badge:"walkup",d:"Wood-fired pizza — order before 14:30, they break till 16:30.",loc:["160 Castro St, Mountain View","Doppio Zero Mountain View"],price:"~$18–24"},
+   {t:"15:36",title:"#515 Express home — Millbrae ~16:05",badge:"walkup",d:"Evening free.",loc:["Mountain View Caltrain","Mountain View Station"],price:"covered"}
+  ],
+  alts:[
+   {t:"SWAP",title:"Hiller Aviation Museum (static exhibits on weekdays)",badge:"walkup",d:"747 nose + 737 cockpit still open; sims are weekend-only.",loc:["601 Skyway Rd, San Carlos","Hiller Aviation Museum San Carlos"],price:"$14 youth",link:["hiller.org","https://www.hiller.org"]}
+  ]},
+ {id:27,dow:"THU",leg:"family",title:"Icons: Exploratorium, Painted Ladies, Twin Peaks, Lombard",img:"%%IMG_painted%%",
+  acts:[
+   {t:"10:00",title:"Exploratorium",badge:"book",d:"Hundreds of hands-on physics + perception exhibits — give it the morning. BART in from Millbrae ~35 min + 12-min waterfront walk.",loc:["Pier 15, San Francisco","Exploratorium Pier 15 San Francisco"],price:"$39.95 adult · $29.95 youth",link:["Book tickets","https://www.exploratorium.edu"]},
+   {t:"13:15",title:"Ferry Building food-hall lunch",badge:"walkup",d:"10 min down the Embarcadero.",loc:["SF Ferry Building","San Francisco Ferry Building"],price:"~$15–20"},
+   {t:"14:30",title:"Waymo to Alamo Square — the Painted Ladies",badge:"free",d:"The postcard row of Victorians with the skyline stacked behind. Sit on the grass, get the shot.",loc:["Alamo Square, San Francisco","Alamo Square San Francisco"],price:"park free · Waymo ~$15–20",link:["Waymo","https://waymo.com"]},
+   {t:"15:30",title:"Waymo up Twin Peaks — THE viewpoint",badge:"free",d:"~280 m over the entire city, bridge to bay, Market St arrowing at the Ferry Building. Always windy — bring the windbreaker.",loc:["Twin Peaks Summit","Twin Peaks San Francisco"],price:"$0"},
+   {t:"16:45",title:"Powell–Hyde cable car + Lombard's crooked block",badge:"walkup",d:"Over Russian Hill, hop off at Lombard, walk it down, roll to the Wharf for sunset + dinner.",loc:["Lombard Street crooked block","Lombard Street San Francisco"],price:"cable car $9 each",link:["Muni fares","https://www.sfmta.com/getting-around/muni/fares"]}
+  ],
+  alts:[
+   {t:"ADD-ON",title:"Chinatown: Dragon Gate + fortune cookie factory",badge:"free",d:"Ross Alley — watch them fold, warm samples. 10 min off the cable-car line if legs allow.",loc:["Golden Gate Fortune Cookie Factory","Golden Gate Fortune Cookie Factory Ross Alley San Francisco"],price:"samples ~$1"},
+   {t:"SWAP",title:"Moffett Field Museum (with dad — federal gate, adult ID)",badge:"walkup",d:"At the foot of Hangar One. Wed–Sat 10–15, call ahead.",loc:["Moffett Field, Mountain View","Moffett Field Historical Society Museum"],price:"$10 adult · $5 youth",link:["moffettfieldmuseum.org","https://moffettfieldmuseum.org"]}
+  ]},
+ {id:28,dow:"FRI",leg:"family",title:"Redwood giants + Santa Cruz",img:"%%IMG_redwoods%%",
+  acts:[
+   {t:"07:45",title:"Hotel shuttle → SFO Rental Car Center → drive south",badge:"book",d:"I-280 → CA-85 → CA-17 over the summit. ~55 mi, ~1¼ h.",loc:["SFO Rental Car Center","SFO Rental Car Center"],price:"~$60–100 all-in"},
+   {t:"09:15",title:"Henry Cowell Redwoods — the giant grove",badge:"walkup",d:"0.8-mi flat loop through 277-ft, 1,500-year-old old-growth — a class above Muir Woods. Stand inside the Fremont Tree. No reservations.",loc:["101 N Big Trees Park Rd, Felton","Henry Cowell Redwoods State Park"],price:"$10 parking, entry free",link:["parks.ca.gov","https://www.parks.ca.gov/?page_id=546"]},
+   {t:"11:00",title:"Santa Cruz: beach, wharf, Boardwalk arcade",badge:"ifopen",d:"Giant Dipper (1924 wooden coaster) if rides run Fridays this late in August — check the hours page; the beach and arcade never close.",loc:["400 Beach St, Santa Cruz","Santa Cruz Beach Boardwalk"],price:"wristband ~$40–60 · arcade á la carte",link:["Check ride hours","https://beachboardwalk.com/hours"]},
+   {t:"14:30",title:"West Cliff Drive — Steamer Lane surfers",badge:"free",d:"Watch from the cliff edge, sea lions below the lighthouse point.",loc:["Steamer Lane, Santa Cruz","Steamer Lane Santa Cruz"],price:"$0"},
+   {t:"16:00",title:"Highway 17 north before the Friday crush",badge:"walkup",d:"~1.5 h back, park at the hotel, return the car at SFO tomorrow at 08:00.",loc:["The Dylan Hotel, Millbrae","The Dylan Hotel at SFO Millbrae"],price:"—"}
+  ],
+  alts:[
+   {t:"SWAP",title:"Muir Woods, car-free (shuttle runs Fri–Sun)",badge:"book",d:"Larkspur ferry + reserved Route 66F shuttle. Smaller trees, zero driving.",loc:["Muir Woods National Monument","Muir Woods National Monument"],price:"$15 adult, under-16 free · shuttle $4 RT",link:["Reserve shuttle","https://gomuirwoods.com"]},
+   {t:"SWAP",title:"Flip with Saturday: Boardwalk rides guaranteed weekends",badge:"ifopen",d:"Trade this day with Angel Island if the Giant Dipper is a must — at the cost of the island's simpler ferry logistics.",loc:["Santa Cruz Beach Boardwalk","Santa Cruz Beach Boardwalk"],price:"wristband ~$40–60"}
+  ]},
+ {id:29,dow:"SAT",leg:"family",title:"Angel Island bike raid",img:"%%IMG_angel%%",
+  acts:[
+   {t:"08:00",title:"Return the car at SFO, BART into the city",badge:"walkup",d:"Rental Center is 24/7; Ferry Building by ~09:30.",loc:["SFO Rental Car Center","SFO Rental Car Center"],price:"—"},
+   {t:"10:15",title:"Golden Gate Ferry → Angel Island",badge:"walkup",d:"Gates B/C, lands 10:45. Buy the ROUND TRIP — no ticket sales on the island. Park entry included.",loc:["SF Ferry Building Gate B/C","San Francisco Ferry Building"],price:"$10 adult tap · $8 youth",link:["Schedule","https://www.goldengate.org/ferry/angel-island-ferry/"]},
+   {t:"11:00",title:"Rent mountain bikes, lap the Perimeter Road",badge:"walkup",d:"5.5 hilly miles, 360° views of the bridge, the city, Tiburon. Under-18 fine with helmet + parent present; island e-bikes are 18+, so pedal power today.",loc:["Ayala Cove, Angel Island","Ayala Cove Angel Island"],price:"$16 / hour per bike",link:["angelisland.com","https://angelisland.com"]},
+   {t:"13:30",title:"Bikes back (due 15:30), picnic at Ayala Cove",badge:"free",d:"Feet in the water, café on the cove.",loc:["Ayala Cove","Ayala Cove Angel Island"],price:"picnic prices"},
+   {t:"15:20",title:"Ferry home — 15:20, or stretch to the 16:50 last boat",badge:"walkup",d:"Last proper SF night.",loc:["Angel Island Ferry Dock","Ayala Cove Angel Island"],price:"covered by round trip"}
+  ],
+  alts:[
+   {t:"SWAP",title:"USS Hornet (open Sat) if you skipped it Sunday",badge:"walkup",d:"Weekend route: ferry to Alameda Main St + bus 96.",loc:["USS Hornet, Alameda","USS Hornet Museum Alameda"],price:"$25 / $12",link:["uss-hornet.org","https://uss-hornet.org"]},
+   {t:"SWAP",title:"Santa Cruz Boardwalk day (rides guaranteed)",badge:"walkup",d:"If Friday's ride check came up empty and the Dipper matters.",loc:["Santa Cruz Beach Boardwalk","Santa Cruz Beach Boardwalk"],price:"wristband ~$40–60",link:["beachboardwalk.com","https://beachboardwalk.com"]}
+  ]},
+ {id:30,dow:"SUN",leg:"family",title:"Golden Gate Park → wheels up",img:"%%IMG_teagarden%%",
+  acts:[
+   {t:"10:00",title:"Check out, bags at the desk, Waymo to Golden Gate Park",badge:"walkup",d:"~30 min across town (or BART + the N train).",loc:["Golden Gate Park","Golden Gate Park Music Concourse"],price:"Waymo ~$35–45"},
+   {t:"11:00",title:"California Academy of Sciences at opening",badge:"book",d:"Rainforest dome, Steinhart Aquarium, penguins, living roof — ~2.5 h. Pre-booked date tickets.",loc:["55 Music Concourse Dr","California Academy of Sciences"],price:"$49–55 adult · $45–49 youth",link:["Tickets","https://www.calacademy.org"]},
+   {t:"13:00",title:"Golden Gate Park Band — free Bandshell concert",badge:"free",d:"13:00–14:30 right outside; food-truck lunch on the Concourse.",loc:["Spreckels Temple of Music","Golden Gate Park Bandshell"],price:"$0"},
+   {t:"14:15",title:"Pick one: de Young tower · Tea Garden · pedal boat",badge:"pick",d:"Hamon Tower view is free; Japanese Tea Garden $15–18 / $7 youth; Blue Heron Lake pedal boat $32.50/h, first-come.",loc:["Music Concourse area","de Young Museum San Francisco"],price:"$0 – $33",link:["Tea Garden","https://www.japaneseteagardensf.com"]},
+   {t:"15:15",title:"Waymo back to Millbrae, grab bags, hotel shuttle to SFO",badge:"walkup",d:"Arriving early is the plan.",loc:["The Dylan Hotel, Millbrae","The Dylan Hotel at SFO Millbrae"],price:"Waymo ~$35–45"},
+   {t:"16:30",title:"SkyTerrace, Terminal 2 — SFO's free observation deck",badge:"free",d:"Landside, open Sundays to 18:00. Watch the heavies you're about to join. (Earlier? Free SFO Aviation Museum in the International Terminal to 16:30.)",loc:["SFO Terminal 2","SFO Terminal 2"],price:"$0",link:["flysfo.com","https://www.flysfo.com"]},
+   {t:"20:00",title:"Wheels up",badge:"free",d:"This time you're in the back, judging the crew's flare from row 40.",loc:["SFO International Terminal","SFO International Terminal"],price:"—"}
+  ]},
+ {id:"info",util:"INFO",title:"Cheat sheet",info:true}
+];
 
-  <footer class="fine">
-    <p>Photos: Wikimedia Commons — Golden Gate Bridge © Cary Bass (CC BY-SA 3.0); Sand Harbor © inkknife_2000 (CC BY-SA 2.0); USS Hornet © ShakataGaNai (CC BY-SA 3.0); Stanford Memorial Church © Frank Schulenburg (CC BY-SA 4.0); Apple Park © Daniel L. Lu (CC BY-SA 4.0); Painted Ladies © King of Hearts (CC BY-SA 3.0); Henry Cowell © Johan Jönsson (CC BY-SA 4.0); Ayala Cove © Richard N Horne (CC BY-SA 4.0); Tea Garden pagoda: Daderot (CC0).</p>
-    <p>Researched and verified Aug 18, 2026 against official sources (goldengate.org 2026 ferry card, Caltrain GTFS/Jan 2026 timetable, calacademy.org, parks.ca.gov, roaringcamp.com, hiller.org, sancarlosflight.com, sfomuseum.org, sfmta.com, vta.org, waymo.com, Northstar's published 2026 hours). Schedules shift — re-check ferry times, lift hours (My Epic app), and museum hours the day before. Flagged for a live check: USS Hornet event days (uss-hornet.org/events), Boardwalk Friday ride operation, Enterprise Beach St Saturday hours, SkyTerrace hours, Northstar 2026 youth pricing.</p>
-  </footer>
-</div>
+const bar = document.getElementById("daybar");
+const panel = document.getElementById("panel");
+
+DAYS.forEach(d => {
+  const b = document.createElement("button");
+  b.className = "daybtn" + (d.util ? " util" : "");
+  if (d.leg) b.dataset.leg = d.leg;
+  b.innerHTML = d.util
+    ? "<small>" + (d.id === "todo" ? "★" : "ℹ") + "</small><b>" + d.util + "</b>"
+    : "<small>" + d.dow + "</small><b>" + d.id + "</b><span class='dot'></span>";
+  b.addEventListener("click", () => show(d.id, true));
+  b.id = "btn-" + d.id;
+  bar.appendChild(b);
+});
+
+function card(a, isAlt) {
+  let h = "<article class='act" + (isAlt ? " alt" : "") + "'><time>" + a.t + "</time><div>";
+  const bd = BADGES[a.badge] || BADGES.walkup;
+  h += "<h3>" + a.title + " <span class='badge " + bd[0] + "'>" + bd[1] + "</span></h3>";
+  h += "<p>" + a.d + "</p><div class='meta'>";
+  if (a.loc) h += "<a class='chip' target='_blank' rel='noopener' href='" + M(a.loc[1]) + "'>📍 " + a.loc[0] + "</a>";
+  if (a.price) h += "<span class='chip price'>💵 " + a.price + "</span>";
+  if (a.link) h += "<a class='chip' target='_blank' rel='noopener' href='" + a.link[1] + "'>🔗 " + a.link[0] + "</a>";
+  h += "</div></div></article>";
+  return h;
+}
+
+function show(id, fromClick) {
+  const d = DAYS.find(x => String(x.id) === String(id)) || DAYS[0];
+  document.querySelectorAll(".daybtn").forEach(x => x.classList.remove("active"));
+  const btn = document.getElementById("btn-" + d.id);
+  if (btn) { btn.classList.add("active"); btn.scrollIntoView({block:"nearest", inline:"center", behavior:"smooth"}); }
+  let h = "<div class='fadein'>";
+  h += "<div class='panel-head'>";
+  if (!d.util) h += "<h2 class='display'><span class='daynum'>" + d.dow + " " + d.id + "</span></h2>";
+  h += "<h2>" + d.title + "</h2>";
+  if (d.leg) h += "<span class='legchip " + d.leg + "'>" + (d.leg === "tahoe" ? "Tahoe" : d.leg === "solo" ? "Solo · Caltrain" : "Family") + "</span>";
+  h += "</div>";
+  if (d.img) h += "<figure class='dayphoto'><img src='" + d.img + "' alt=''></figure>";
+  if (d.note) h += "<div class='note'>" + d.note + "</div>";
+  if (d.info) h += infoHTML();
+  if (d.acts) d.acts.forEach(a => h += card(a, false));
+  if (d.alts && d.alts.length) {
+    h += "<div class='altdivider'>More options — swap in if plans change</div>";
+    d.alts.forEach(a => h += card(a, true));
+  }
+  h += "</div>";
+  panel.innerHTML = h;
+  if (fromClick) history.replaceState(null, "", "#d" + d.id);
+}
+
+function infoHTML() {
+  return `
+  <div class="infoblock">
+    <div class="note"><b>The Waymo rule:</b> riders must be 18+ to ride alone (teen accounts are 14–17, Phoenix-only). Solo days run entirely on Caltrain + walking; Waymo is for days dad is along. Bonus: regular Muni is free for everyone 18 and under — visitors included. Cable cars are the exception: $9 flat.</div>
+    <h3 class="display">FERRIES</h3>
+    <table>
+      <tr><td>Tiburon → SF Sat/Sun</td><td class="mono">11:50 · 12:55 · 14:45 · 17:15 (last)</td></tr>
+      <tr><td>Tiburon → SF Mon–Fri</td><td class="mono">6:50 · 8:10 · 9:35 · 11:50 · 13:15 · 16:30 (last)</td></tr>
+      <tr><td>SF ↔ Angel Island (Sat)</td><td class="mono">Out 10:15 · 14:05 · 16:05 — Back 10:55 · 15:20 · 16:50 (last)</td></tr>
+      <tr><td>Fares</td><td>Adult $8.50 tap (Tiburon) / $10 (Angel Is.) · Youth $7–8 · bikes under 50 lb free</td></tr>
+    </table>
+    <h3 class="display">CALTRAIN</h3>
+    <table>
+      <tr><td>Youth 18 &amp; under</td><td>$1 a ride · $2 day pass (station machines) · carry proof of age</td></tr>
+      <tr><td>South AM (SF dep.)</td><td class="mono">08:48 Ltd · 08:55 Loc · 09:25 Loc · 09:55 Loc — Millbrae ~17–20 min later</td></tr>
+      <tr><td>Home PM</td><td class="mono">Palo Alto 16:43 Exp / 17:10 Ltd · Sunnyvale 16:32 / 16:57 · Mtn View 15:36 / 16:36</td></tr>
+      <tr><td>Frequency</td><td>Every 30 min all day — missing one costs half an hour, nothing more</td></tr>
+    </table>
+    <h3 class="display">WEATHER + PACKING</h3>
+    <table>
+      <tr><td>San Francisco</td><td>65–68°F, foggy mornings ("Fogust"), bridge deck cold + windy — windbreaker over layers</td></tr>
+      <tr><td>Truckee / Tahoe</td><td>Warm, bone-dry, fierce high-altitude sun — sunscreen everywhere</td></tr>
+      <tr><td>Bring</td><td>Helmet-friendly beanie, power bank, quarters for Musée Mécanique, binoculars for Bayfront Park</td></tr>
+    </table>
+    <h3 class="display">PHONES</h3>
+    <table>
+      <tr><td>Northstar</td><td>1-800-842-8062 (youth ticket + rental prices)</td></tr>
+      <tr><td>Blazing Saddles</td><td>415-202-8888 (E-Blazer weight + reservation)</td></tr>
+      <tr><td>Blue &amp; Gold Fleet</td><td>415-705-8200 (heavy e-bikes on the Sausalito boat)</td></tr>
+      <tr><td>Truckee Donner Lodge</td><td>530-582-9999</td></tr>
+    </table>
+  </div>`;
+}
+
+const hash = location.hash.replace("#d", "");
+show(hash && DAYS.some(x => String(x.id) === hash) ? hash : "todo", false);
+</script>
